@@ -11,7 +11,7 @@ class AuthController extends Controller
     public function login()
     {
         if (Auth::check()) {
-            return redirect()->route('tournament.index');
+            return redirect()->route('tournaments.index');
         }
         return view('auth.login');
     }
@@ -31,7 +31,7 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->route('tournament.index');
+            return redirect()->route('tournaments.index');
         }
 
         return back()->withErrors([
@@ -44,7 +44,7 @@ class AuthController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect()->route('tournament.index');
+        return redirect()->route('tournaments.index');
     }
 
 }

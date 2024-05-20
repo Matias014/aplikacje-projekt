@@ -20,7 +20,7 @@
                                 <p class="card-text">{{ $tournament->description }}</p>
                                 <p class="card-text">Data turnieju: {{ $tournament->date }}</p>
                                 <p class="card-text">Cena wejściowa: {{ $tournament->price }} zł</p>
-                                <a href="{{route('tournament.show', ['id' => $tournament->id])}}" class="btn btn-primary">Więcej szczegółów</a>
+                                <a href="{{route('tournaments.show', ['id' => $tournament->id])}}" class="btn btn-primary">Więcej szczegółów</a>
                             </div>
                         </div>
                     </div>

@@ -10,7 +10,7 @@
                     <a class="nav-link active" aria-current="page" href="{{ route('index') }}">Strona główna</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('tournament.index') }}">Turnieje</a>
+                    <a class="nav-link" href="{{ route('tournaments.index') }}">Turnieje</a>
                 </li>
             </ul>
             <ul id="navbar-user" class="navbar-nav mb-2 mb-lg-0">

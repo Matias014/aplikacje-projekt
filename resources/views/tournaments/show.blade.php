@@ -7,9 +7,6 @@
 
     <main class="flex-grow-1">
         <div class="container text-center mt-2">
-            {{-- <div class="row mt-5">
-                <h1>Turnieje</h1>
-            </div> --}}
             <div class="row d-flex justify-content-center">
                 <div class="col-12 col-lg-6 mt-5">
                     <div class="card">
@@ -19,9 +16,20 @@
                             <p class="card-text">{{ $tournament->description }}</p>
                             <p class="card-text">Data turnieju: {{ $tournament->date }}</p>
                             <p class="card-text">Cena wejściowa: {{ $tournament->price }} zł</p>
-                            <div class="text-center mt-4">
-                                <input class="btn btn-light" type="submit" value="Zapisz się">
-                            </div>
+                            @auth
+                                <form action="{{ route('tournaments.participants.store', $tournament) }}" method="POST">
+                                    @csrf
+                                    <div class="form-group">
+                                        <label for="team">Wybierz drużynę</label>
+                                        <select name="team" id="team" class="form-control" required>
+                                            @foreach ($teams as $team)
+                                                <option value="{{ $team }}">{{ $team }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn btn-light mt-2">Zapisz się</button>
+                                </form>
+                            @endauth
                         </div>
                     </div>
                 </div>
@@ -44,8 +52,8 @@
                                         @foreach ($participants as $participant)
                                             <div class="participant d-flex align-items-center mb-3">
                                                 <img src="{{ asset('img/' . $participant->avatar) }}"
-                                                    alt="{{ $participant->name }}" class="rounded-circle" width="50"
-                                                    height="50">
+                                                    alt="{{ $participant->name }}" class="rounded-circle"
+                                                    width="50" height="50">
                                                 <div class="ms-3">
                                                     <p class="mb-0"><strong>{{ $participant->name }}
                                                             {{ $participant->surname }}</strong></p>
@@ -68,12 +76,33 @@
                                 <p class="card-text">{{ $answer->answer }}</p>
                                 <footer class="blockquote-footer">{{ $answer->user->name }}
                                     {{ $answer->user->surname }}</footer>
+                                @if ($answer->user_id === Auth::id())
+                                    <div class="d-flex justify-content-end">
+                                        <button class="btn btn-primary btn-sm me-2"
+                                            onclick="showEditForm({{ $answer->id }})">Edytuj</button>
+                                        <form action="{{ route('answers.destroy', $answer) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm">Usuń</button>
+                                        </form>
+                                    </div>
+                                    <form id="edit-form-{{ $answer->id }}"
+                                        action="{{ route('answers.update', $answer) }}" method="POST"
+                                        style="display: none;">
+                                        @csrf
+                                        @method('PUT')
+                                        <div class="form-group mt-2">
+                                            <textarea class="form-control" name="answer" rows="3" required>{{ $answer->answer }}</textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary mt-2">Zaktualizuj</button>
+                                    </form>
+                                @endif
                             </div>
                         </div>
                     @endforeach
 
                     @auth
-                        @if ($tournament->participants->contains('user_id', Auth::id()))
+                        @if ($tournament->participants->pluck('id')->contains(Auth::id()))
                             <form action="{{ route('answers.store', $tournament) }}" method="POST">
                                 @csrf
                                 <div class="form-group">
@@ -91,6 +120,13 @@
     </main>
 
     @include('shared.footer')
+
+    <script>
+        function showEditForm(answerId) {
+            const form = document.getElementById(`edit-form-${answerId}`);
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">

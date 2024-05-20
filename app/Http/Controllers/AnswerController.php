@@ -10,29 +10,15 @@ use Illuminate\Support\Facades\Auth;
 
 class AnswerController extends Controller
 {
-    public function index()
-    {
-        return view('tournaments.index', [
-            'tournaments' => Answer::all()
-        ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('tournaments.create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request, Tournament $tournament)
     {
         $request->validate([
             'answer' => 'required|string|max:500',
         ]);
+
+        if (!$tournament->participants->contains(Auth::id())) {
+            return redirect()->route('tournaments.show', $tournament)->withErrors('Nie jesteś zarejestrowany na ten turniej.');
+        }
 
         Answer::create([
             'user_id' => Auth::id(),
@@ -40,48 +26,39 @@ class AnswerController extends Controller
             'answer' => $request->input('answer'),
         ]);
 
-        return redirect()->route('tournament.show', $tournament)->with('success', 'Komentarz został dodany.');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show($id)
-    {
-        $tournament = Answer::with('participants')->findOrFail($id);
-        return view('tournaments.show', compact('tournament'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Answer $tournament)
-    {
-        return view('tournaments.edit', ['tournament' => $tournament]);
+        return redirect()->route('tournaments.show', $tournament)->with('success', 'Komentarz został dodany.');
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTournamentRequest $request, Answer $answer)
+    public function update(Request $request, Answer $answer)
     {
-        // if ($request->user()->cannot('update', $country)) {
-        //     abort(403);
-        // }
+        $request->validate([
+            'answer' => 'required|string|max:500',
+        ]);
 
-        Gate::authorize('update', $answer);
+        if ($answer->user_id !== Auth::id()) {
+            return redirect()->route('tournaments.show', $answer->tournament_id)->withErrors('Nie możesz zaktualizować ten komentarz.');
+        }
 
-        $input = $request->all();
-        $answer->update($input);
-        return redirect()->route('tournaments.index');
+        $answer->update([
+            'answer' => $request->input('answer'),
+        ]);
+
+        return redirect()->route('tournaments.show', $answer->tournament_id)->with('success', 'Komentarz został zaktualizowany.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Answer $tournament)
+    public function destroy(Answer $answer)
     {
-        $tournament->delete();
-        return redirect()->route('tournaments.index');
+        if ($answer->user_id !== Auth::id()) {
+            return redirect()->route('tournaments.show', $answer->tournament_id)->withErrors('Nie możesz usunąć ten komentarz.');
+        }
+
+        $answer->delete();
+        return redirect()->route('tournaments.show', $answer->tournament_id)->with('success', 'Komentarz został usunięty.');
     }
 }

@@ -23,4 +23,10 @@ class Tournament extends Model
     {
         return $this->hasMany(Answer::class);
     }
+
+    public function hasReachedMaxTeamSize($team)
+    {
+        $maxTeamSize = 4; // Maksymalna liczba członków w drużynie
+        return $this->participants()->wherePivot('team', $team)->count() >= $maxTeamSize;
+    }
 }

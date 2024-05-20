@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateTournamentRequest;
 use App\Models\Tournament;
 use Illuminate\Auth\Access\Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TournamentController extends Controller
 {
@@ -44,8 +45,12 @@ class TournamentController extends Controller
      */
     public function show($id)
     {
-        $tournament = Tournament::with('participants')->findOrFail($id);
-        return view('tournaments.show', compact('tournament'));
+        $tournament = Tournament::with(['participants', 'answers.user'])->findOrFail($id);
+
+        // Pobierz unikalne nazwy drużyn
+        $teams = $tournament->participants->pluck('pivot.team')->unique();
+
+        return view('tournaments.show', compact('tournament', 'teams'));
     }
 
     /**
@@ -79,5 +84,27 @@ class TournamentController extends Controller
     {
         $tournament->delete();
         return redirect()->route('tournaments.index');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function storeParticipant(Request $request, Tournament $tournament)
+    {
+        $request->validate([
+            'team' => 'required|string|max:20',
+        ]);
+
+        $team = $request->input('team');
+
+        if ($tournament->hasReachedMaxTeamSize($team)) {
+            return redirect()->route('tournaments.show', $tournament)
+                ->withErrors('Drużyna osiągnęła maksymalną liczbę członków.');
+        }
+
+        $tournament->participants()->attach(Auth::id(), ['team' => $team]);
+
+        return redirect()->route('tournaments.show', $tournament)
+            ->with('success', 'Zapisano do turnieju.');
     }
 }

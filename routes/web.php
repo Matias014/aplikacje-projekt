@@ -14,14 +14,23 @@ Route::get('/index', function () {
 })->name('index');
 
 Route::controller(TournamentController::class)->group(function () {
-    Route::get('/tournament', 'index')->name('tournament.index');
-    Route::get('/tournament/{id}', 'show')->name('tournament.show');
-    Route::get('/tournament/{id}/edit', 'edit')->name('tournament.edit');
-    Route::put('/tournament/{id}', 'update')->name('tournament.update');
-    Route::post('/tournament/{tournament}/answers', [AnswerController::class, 'store'])->name('answers.store');
+    Route::get('/tournaments', 'index')->name('tournaments.index');
+    Route::get('/tournaments/create', 'create')->name('tournaments.create');
+    Route::get('/tournaments/{id}', 'show')->name('tournaments.show');
+    Route::get('/tournaments/{id}/edit', 'edit')->name('tournaments.edit');
+    Route::put('/tournaments/{id}', 'update')->name('tournaments.update');
+    Route::delete('/tournaments/{id}', 'destroy')->name('tournaments.destroy');
+    Route::post('/tournaments/{tournament}/participants', [TournamentController::class, 'storeParticipant'])->name('tournaments.participants.store');
 });
 
+// Route::resource('countries', TournamentController::class);
 // Route::resource('countries', CountryController::class);
+
+Route::controller(AnswerController::class)->group(function () {
+    Route::post('/tournaments/{tournament}/answers', 'store')->name('answers.store');
+    Route::put('/answers/{answer}', 'update')->name('answers.update');
+    Route::delete('/answers/{answer}', 'destroy')->name('answers.destroy');
+});
 
 Route::controller(AuthController::class)->group(function () {
     Route::get('/auth/login', 'login')->name('login');
