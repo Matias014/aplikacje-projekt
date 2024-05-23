@@ -17,18 +17,28 @@
                             <p class="card-text">Data turnieju: {{ $tournament->date }}</p>
                             <p class="card-text">Cena wejściowa: {{ $tournament->price }} zł</p>
                             @auth
-                                <form action="{{ route('tournaments.participants.store', $tournament) }}" method="POST">
-                                    @csrf
-                                    <div class="form-group">
-                                        <label for="team">Wybierz drużynę</label>
-                                        <select name="team" id="team" class="form-control" required>
-                                            @foreach ($teams as $team)
-                                                <option value="{{ $team }}">{{ $team }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <button type="submit" class="btn btn-light mt-2">Zapisz się</button>
-                                </form>
+                                @if ($tournament->participants->contains(Auth::id()))
+                                    <form action="{{ route('tournaments.participants.destroy', $tournament) }}"
+                                        method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger mt-2">Wypisz się</button>
+                                    </form>
+                                @else
+                                    <form action="{{ route('tournaments.participants.store', $tournament) }}"
+                                        method="POST">
+                                        @csrf
+                                        <div class="form-group">
+                                            <label for="team">Wybierz drużynę</label>
+                                            <select name="team" id="team" class="form-control" required>
+                                                @foreach ($teams as $team)
+                                                    <option value="{{ $team }}">{{ $team }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <button type="submit" class="btn btn-light mt-2">Zapisz się</button>
+                                    </form>
+                                @endif
                             @endauth
                         </div>
                     </div>

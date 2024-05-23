@@ -50,7 +50,7 @@ class TournamentController extends Controller
         // Pobierz unikalne nazwy drużyn
         $teams = $tournament->participants->pluck('pivot.team')->unique();
 
-        return view('tournaments.show', compact('tournament', 'teams'));
+        return view('tournaments.show', ['tournament' => $tournament, 'teams' => $teams]);
     }
 
     /**
@@ -106,5 +106,12 @@ class TournamentController extends Controller
 
         return redirect()->route('tournaments.show', $tournament)
             ->with('success', 'Zapisano do turnieju.');
+    }
+
+    public function destroyParticipant(Request $request, Tournament $tournament)
+    {
+        $tournament->participants()->detach(Auth::id());
+
+        return redirect()->route('tournaments.show', $tournament);
     }
 }

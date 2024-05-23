@@ -4,12 +4,14 @@ use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TournamentController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\UserController;
+
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/index', function () {
     return view('index');
 })->name('index');
 
@@ -21,6 +23,7 @@ Route::controller(TournamentController::class)->group(function () {
     Route::put('/tournaments/{id}', 'update')->name('tournaments.update');
     Route::delete('/tournaments/{id}', 'destroy')->name('tournaments.destroy');
     Route::post('/tournaments/{tournament}/participants', [TournamentController::class, 'storeParticipant'])->name('tournaments.participants.store');
+    Route::delete('/tournaments/{tournament}/participants', [TournamentController::class, 'destroyParticipant'])->name('tournaments.participants.destroy');
 });
 
 // Route::resource('countries', TournamentController::class);
@@ -38,4 +41,9 @@ Route::controller(AuthController::class)->group(function () {
     Route::get('/auth/logout', 'logout')->name('logout');
 });
 
-// Route::get('/auth/register', 'register')->name('register');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+    Route::resource('admin/users', UserController::class, ['as' => 'admin']);
+    Route::resource('admin/tournaments', TournamentController::class, ['as' => 'admin']);
+    // Dodaj więcej zasobów według potrzeb
+});

@@ -8,6 +8,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use App\Models\User;
 use App\Policies\CountryPolicy;
+use App\Policies\UserPolicy;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -30,10 +31,10 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Gate::define('is-admin', function (User $user) {
-            return $user->role_id == 1;
+            return $user->role == 'admin';
         });
 
-        Gate::policy(Country::class, CountryPolicy::class);
+        Gate::policy(User::class, UserPolicy::class);
 
         Gate::before(function (User $user, string $ability) {
             return $user->isAdmin();

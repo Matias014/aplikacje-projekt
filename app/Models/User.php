@@ -27,6 +27,8 @@ class User extends Authenticatable
         'role'
     ];
 
+    public $timestamps = false;
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -61,6 +63,6 @@ class User extends Authenticatable
     }
 
     public function isAdmin() : bool {
-        return $this->role_id == "admin";
+        return $this->role == "admin";
     }
 }
