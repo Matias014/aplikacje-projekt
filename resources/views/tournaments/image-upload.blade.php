@@ -23,7 +23,8 @@
                         <label for="formFileMultiple" class="form-label">
                             Przesyłanie kilku (max. 5x) plików:
                         </label>
-                        <input name="files[]" class="form-control" type="file" id="formFileMultiple" multiple accept=".jpg, .jpeg">
+                        <input name="files[]" class="form-control" type="file" id="formFileMultiple" multiple
+                            accept=".jpg, .jpeg">
                     </div>
                     <div class="text-center mt-4 mb-4">
                         <input class="btn btn-primary" type="submit" value="Wyślij">

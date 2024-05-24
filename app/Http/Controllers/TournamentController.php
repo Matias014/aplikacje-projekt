@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreTournamentRequest;
 use App\Http\Requests\UpdateTournamentRequest;
 use App\Models\Tournament;
-use Illuminate\Auth\Access\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class TournamentController extends Controller
 {
@@ -26,7 +26,7 @@ class TournamentController extends Controller
      */
     public function create()
     {
-        return view('tournaments.create');
+        return view('admin.tournament.create');
     }
 
     /**
@@ -47,7 +47,6 @@ class TournamentController extends Controller
     {
         $tournament = Tournament::with(['participants', 'answers.user'])->findOrFail($id);
 
-        // Pobierz unikalne nazwy drużyn
         $teams = $tournament->participants->pluck('pivot.team')->unique();
 
         return view('tournaments.show', ['tournament' => $tournament, 'teams' => $teams]);
@@ -58,7 +57,7 @@ class TournamentController extends Controller
      */
     public function edit(Tournament $tournament)
     {
-        return view('tournaments.edit', ['tournament' => $tournament]);
+        return view('admin.tournament.edit', ['tournament' => $tournament]);
     }
 
     /**
@@ -66,11 +65,11 @@ class TournamentController extends Controller
      */
     public function update(UpdateTournamentRequest $request, Tournament $tournament)
     {
-        // if ($request->user()->cannot('update', $country)) {
-        //     abort(403);
-        // }
+        if (!Gate::allows('is-admin')) {
+            abort(403);
+        }
 
-        Gate::authorize('update', $tournament);
+        // Gate::authorize('update', $tournament);
 
         $input = $request->all();
         $tournament->update($input);

@@ -13,12 +13,16 @@ return new class extends Migration
     {
         Schema::create('tournaments', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 40);
+            $table->string('name', 40)->unique();
             $table->string('description', 255)->nullable();
             $table->timestamp('date');
             $table->decimal('price', 8, 2);
             $table->string('img')->nullable();
-            $table->timestamps();
+            $table->integer('max_team_alfa')->default(0);
+            $table->integer('max_team_beta')->default(0);
+            $table->integer('max_team_gamma')->default(0);
+            $table->integer('max_team_delta')->default(0);
+            // $table->timestamps();
         });
     }
 

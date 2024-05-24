@@ -22,17 +22,25 @@ class TournamentSeeder extends Seeder
             [
                 [
                     'name' => 'Turniej o tytuł mistrza paintballa',
-                    'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur in placerat sapien. Suspendisse facilisis libero eros, eget consectetur risus accumsan eu. Fusce commodo pretium risus, vitae rutrum erat tristique eget. Curabitur sed bibendum sapien vel. ',
+                    'description' => 'Dołącz do najbardziej prestiżowego turnieju paintballowego tego sezonu i walcz o tytuł mistrza! Zapewniamy niezapomniane emocje, zaciętą rywalizację i wspaniałe nagrody. Zarezerwuj miejsce dla swojej drużyny już dziś!',
                     'date' => '2024-05-31 12:00:00',
                     'price' => '30',
-                    'img' => 'turniej1.jpg'
+                    'img' => 'turniej1.jpg',
+                    'max_team_alfa' => '3',
+                    'max_team_beta' => '3',
+                    'max_team_gamma' => '3',
+                    'max_team_delta' => '3'
                 ],
                 [
                     'name' => 'Turniej młodzieżowy',
-                    'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur in placerat sapien. Suspendisse facilisis libero eros, eget consectetur risus accumsan eu. Fusce commodo pretium risus, vitae rutrum erat tristique eget. Curabitur sed bibendum sapien vel. ',
+                    'description' => 'Zapraszamy młodzież na ekscytujący turniej paintballowy! To doskonała okazja, aby sprawdzić swoje umiejętności, poznać nowych przyjaciół i świetnie się bawić. Przygotowaliśmy mnóstwo atrakcji i nagrody dla najlepszych zespołów!',
                     'date' => '2024-06-30 13:00:00',
                     'price' => '20',
-                    'img' => 'turniej2.jpg'
+                    'img' => 'turniej2.jpg',
+                    'max_team_alfa' => '2',
+                    'max_team_beta' => '2',
+                    'max_team_gamma' => '2',
+                    'max_team_delta' => '2'
                 ]
             ]
         );

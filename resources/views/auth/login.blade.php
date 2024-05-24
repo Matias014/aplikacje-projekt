@@ -21,16 +21,19 @@
                     @csrf
                     <div class="form-group mb-2">
                         <label for="email" class="form-label">Email</label>
-                        <input id="email" name="email" type="text" class="form-control @if ($errors->first('email')) is-invalid @endif" value="{{ old('email') }}">
+                        <input id="email" name="email" type="text"
+                            class="form-control @if ($errors->first('email')) is-invalid @endif"
+                            value="{{ old('email') }}">
                         <div class="invalid-feedback">Nieprawidłowy email!</div>
                     </div>
                     <div class="form-group mb-2">
                         <label for="continent" class="form-label">Hasło</label>
-                        <input id="password" name="password" type="password" class="form-control @if ($errors->first('password')) is-invalid @endif">
+                        <input id="password" name="password" type="password"
+                            class="form-control @if ($errors->first('password')) is-invalid @endif">
                         <div class="invalid-feedback">Nieprawidłowe hasło!</div>
                     </div>
                     <div class="text-center mt-4 mb-4">
-                        <input class="btn btn-primary" type="submit" value="Wyślij">
+                        <input class="btn btn-primary" type="submit" value="Zaloguj się">
                     </div>
                 </form>
             </div>
@@ -41,4 +44,3 @@
 </body>
 
 </html>
-

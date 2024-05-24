@@ -12,6 +12,6 @@ class AdminController extends Controller
         if (Auth::check() && Auth::user()->role == 'admin') {
             return view('admin.index');
         }
-        return redirect('/')->withErrors('Nie masz uprawnień do tej strony.');
+        return redirect('/')->withErrors('Niestety, nie masz uprawnień do tej strony.');
     }
 }

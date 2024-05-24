@@ -1,25 +1,22 @@
 @include('shared.html')
 
-@include('shared.head')
+@include('shared.head', ['pageTitle' => 'Strona główna'])
 
 <body>
     @include('shared.navbar')
 
     <main>
-        <!-- Hero Section -->
         <div class="container-fluid p-0">
             <div class="hero-section text-center text-white d-flex align-items-center justify-content-center"
                 style="background-image: url('img/paintballMatch.webp'); background-size: cover; height: 70vh;">
-                {{-- <div class="overlay"
-                    style="background-color: rgba(0, 0, 0, 0.5); width: 100%; height: 100%;"></div> --}}
-                <div class="content d-flex flex-column justify-content-center" style="z-index: 1; background-color: rgba(0, 0, 0, 0.5); width: 100%; height: 100%;">
+                <div class="content d-flex flex-column justify-content-center"
+                    style="z-index: 1; background-color: rgba(0, 0, 0, 0.5); width: 100%; height: 100%;">
                     <h1 class="display-3">Witamy w Klubie Paintballowym</h1>
                     <p class="lead">Dołącz do nas i przeżyj niezapomniane emocje!</p>
                 </div>
             </div>
         </div>
 
-        <!-- Welcome Section -->
         <div class="container mt-5">
             <div class="row">
                 <div class="col-md-6">
@@ -37,7 +34,6 @@
             </div>
         </div>
 
-        <!-- Carousel Section -->
         <div id="carouselExampleIndicators" class="carousel slide mt-5" data-bs-ride="carousel">
             <div class="carousel-indicators">
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
@@ -82,7 +78,6 @@
             </button>
         </div>
 
-        <!-- Benefits Section -->
         <div class="container mt-5">
             <div class="row text-center">
                 <div class="col-md-4">
@@ -117,10 +112,6 @@
     </main>
 
     @include('shared.footer')
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-    </script>
 </body>
 
 </html>

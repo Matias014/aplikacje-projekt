@@ -12,7 +12,7 @@ class Tournament extends Model
 
     protected $fillable = ['name', 'description', 'date', 'price', 'img'];
 
-    public $timestamps = true;
+    public $timestamps = false;
 
     public function participants()
     {

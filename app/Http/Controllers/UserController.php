@@ -22,13 +22,13 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'username' => 'required|string|max:255',
-            'name' => 'required|string|max:255',
-            'surname' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-            'avatar' => 'nullable|string|max:255',
-            'role' => 'required|string|max:255',
+            'username' => 'required|string|max:20|unique:users',
+            'name' => 'required|string|max:20',
+            'surname' => 'required|string|max:25',
+            'email' => 'required|string|email|max:60|unique:users',
+            'password' => 'required|string|max:100|confirmed',
+            'avatar' => 'nullable|string|max:40',
+            'role' => 'required|string|max:5',
         ]);
 
         User::create([
@@ -41,7 +41,7 @@ class UserController extends Controller
             'role' => $request->role,
         ]);
 
-        return redirect()->route('admin.users.index')->with('success', 'Użytkownik został dodany.');
+        return redirect()->route('admin.users.index')->with('success', 'Użytkownik został pomyślnie dodany.');
     }
 
     public function show(User $user)
@@ -76,12 +76,12 @@ class UserController extends Controller
             'role' => $request->role,
         ]);
 
-        return redirect()->route('admin.users.index')->with('success', 'Użytkownik został zaktualizowany.');
+        return redirect()->route('admin.users.index')->with('success', 'Użytkownik został pomyślnie zaktualizowany.');
     }
 
     public function destroy(User $user)
     {
         $user->delete();
-        return redirect()->route('admin.users.index')->with('success', 'Użytkownik został usunięty.');
+        return redirect()->route('admin.users.index')->with('success', 'Użytkownik został pomyślnie usunięty.');
     }
 }

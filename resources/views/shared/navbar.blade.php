@@ -13,9 +13,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('tournaments.index') }}">Turnieje</a>
                 </li>
-                @if (Auth::)
+                {{-- @if (Auth::)
 
-                @endif
+                @endif --}}
                 @if (Auth::check() && Auth::user()->role == 'admin')
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('admin.index') }}">Panel Admina</a>

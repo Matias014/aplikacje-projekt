@@ -1,6 +1,6 @@
 @include('shared.html')
 
-@include('shared.head')
+@include('shared.head', ['pageTitle' => 'Edycja użytkownika'])
 
 <body>
     @include('shared.navbar')
