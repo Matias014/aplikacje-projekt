@@ -10,7 +10,7 @@ class Tournament extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'date', 'price', 'img'];
+    protected $fillable = ['name', 'description', 'date', 'price', 'img', 'max_team_alfa', 'max_team_beta', 'max_team_gamma', 'max_team_delta'];
 
     public $timestamps = false;
 

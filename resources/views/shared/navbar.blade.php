@@ -7,18 +7,24 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{{ route('index') }}">Strona główna</a>
+                <li class="nav-link">
+                    <a class="nav-link  @if (str_contains(request()->path(), 'index')) active @endif"
+                         aria-current="page" href="{{ route('index') }}">Strona główna</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('tournaments.index') }}">Turnieje</a>
+                <li class="nav-link">
+                    <a class="nav-link  @if (str_contains(request()->path(), 'tournaments')) active @endif"
+                         href="{{ route('tournaments.index') }}">Turnieje</a>
                 </li>
-                {{-- @if (Auth::)
-
-                @endif --}}
+                @if (Auth::check())
+                    <li class="nav-link">
+                        <a class="nav-link  @if (str_contains(request()->path(), 'users')) active @endif"
+                             href="{{ route('admin.users.show', Auth::user()->id) }}">Konto</a>
+                    </li>
+                @endif
                 @if (Auth::check() && Auth::user()->role == 'admin')
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.index') }}">Panel Admina</a>
+                    <li class="nav-link">
+                        <a class="nav-link  @if (str_contains(request()->path(), 'admin')) active @endif"
+                             href="{{ route('admin.index') }}">Panel Admina</a>
                     </li>
                 @endif
             </ul>

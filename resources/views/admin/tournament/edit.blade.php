@@ -38,7 +38,7 @@
                         <label for="date" class="form-label">Data</label>
                         <input id="date" name="date" type="datetime-local"
                             class="form-control @if ($errors->first('date')) is-invalid @endif"
-                            value="{{ $tournament->date->format('Y-m-d\TH:i') }}">
+                            value="{{ $tournament->date }}">
                         <div class="invalid-feedback">Nieprawidłowa data!</div>
                     </div>
                     <div class="form-group mb-3">

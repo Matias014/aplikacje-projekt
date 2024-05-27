@@ -20,6 +20,7 @@
                                 <th scope="col">Username</th>
                                 <th scope="col">Imię</th>
                                 <th scope="col">Nazwisko</th>
+                                <th scope="col">Email</th>
                                 <th scope="col">Avatar</th>
                                 <th scope="col"></th>
                                 <th scope="col"></th>
@@ -32,6 +33,7 @@
                                     <td>{{ $user->username }}</td>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->surname }}</td>
+                                    <td>{{ $user->email }}</td>
                                     <td>{{ $user->avatar }}</td>
                                     <td>
                                         @can('update', $user)

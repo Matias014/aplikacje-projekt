@@ -82,7 +82,7 @@
             <div class="row text-center">
                 <div class="col-md-4">
                     <div class="card mb-4 shadow-sm">
-                        <img src="img/benefit1.webp" class="card-img-top" alt="Benefit 1">
+                        <img src="{{ asset('storage/img/benefit1.webp') }}" class="card-img-top" alt="Benefit 1">
                         <div class="card-body">
                             <h5 class="card-title">Profesjonalne wyposażenie</h5>
                             <p class="card-text">Zapewniamy najnowsze i najlepsze wyposażenie dla naszych członków.</p>
@@ -91,7 +91,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="card mb-4 shadow-sm">
-                        <img src="img/benefit2.webp" class="card-img-top" alt="Benefit 2">
+                        <img src="{{ asset('storage/img/benefit2.webp') }}" class="card-img-top" alt="Benefit 2">
                         <div class="card-body">
                             <h5 class="card-title">Bezpieczne warunki</h5>
                             <p class="card-text">Dbamy o bezpieczeństwo naszych graczy podczas każdego meczu.</p>
@@ -100,7 +100,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="card mb-4 shadow-sm">
-                        <img src="img/benefit3.webp" class="card-img-top" alt="Benefit 3">
+                        <img src="{{ asset('storage/img/benefit3.webp') }}" class="card-img-top" alt="Benefit 3">
                         <div class="card-body">
                             <h5 class="card-title">Doskonała lokalizacja</h5>
                             <p class="card-text">Nasze pole paintballowe znajduje się w malowniczej okolicy.</p>

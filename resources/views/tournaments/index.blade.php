@@ -14,7 +14,7 @@
             @if (Auth::check() && Auth::user()->isAdmin())
                 <div class="row">
                     <div class="col-12 text-center">
-                        <a href="{{ route('tournaments.create') }}" class="btn btn-success">Dodaj nowy turniej</a>
+                        <a href="{{ route('admin.tournaments.create') }}" class="btn btn-success">Dodaj nowy turniej</a>
                     </div>
                 </div>
             @endif
@@ -33,9 +33,9 @@
                             </div>
                             @if (Auth::check() && Auth::user()->isAdmin())
                                 <div class="card-footer">
-                                    <a href="{{ route('tournaments.edit', $tournament->id) }}"
+                                    <a href="{{ route('admin.tournaments.edit', $tournament->id) }}"
                                         class="btn btn-warning mt-2">Edytuj</a>
-                                    <form action="{{ route('tournaments.destroy', $tournament) }}" method="POST"
+                                    <form action="{{ route('admin.tournaments.destroy', $tournament) }}" method="POST"
                                         class="d-inline">
                                         @csrf
                                         @method('DELETE')

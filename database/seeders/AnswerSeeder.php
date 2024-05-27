@@ -31,11 +31,6 @@ class AnswerSeeder extends Seeder
                     'tournament_id' => '1',
                     'answer' => 'Hmm, powodzenia!'
                 ],
-                [
-                    'user_id' => '2',
-                    'tournament_id' => '2',
-                    'answer' => 'Oby tak :)'
-                ]
             ]
         );
     }
