@@ -2,7 +2,7 @@
 
 @include('shared.head', ['pageTitle' => 'Turnieje'])
 
-<body>
+<body class="d-flex flex-column min-vh-100">
     @include('shared.navbar')
 
     <main>
@@ -11,13 +11,15 @@
                 <h1>Turnieje</h1>
             </div>
             @include('shared.session-error')
-            @if (Auth::check() && Auth::user()->isAdmin())
+            {{-- @if (Auth::check() && Auth::user()->isAdmin()) --}}
+            @can('is-admin')
                 <div class="row">
                     <div class="col-12 text-center">
-                        <a href="{{ route('admin.tournaments.create') }}" class="btn btn-success">Dodaj nowy turniej</a>
+                        <a href="{{ route('tournaments.create') }}" class="btn btn-success">Dodaj nowy turniej</a>
                     </div>
                 </div>
-            @endif
+            @endcan
+            {{-- @endif --}}
             <div class="row">
                 @forelse ($tournaments as $tournament)
                     <div class="col-12 col-lg-6 mt-3">
@@ -31,18 +33,20 @@
                                 <a href="{{ route('tournaments.show', $tournament->id) }}"
                                     class="btn btn-primary">Więcej szczegółów</a>
                             </div>
-                            @if (Auth::check() && Auth::user()->isAdmin())
+                            {{-- @if (Auth::check() && Auth::user()->isAdmin()) --}}
+                            @can('is-admin')
                                 <div class="card-footer">
-                                    <a href="{{ route('admin.tournaments.edit', $tournament->id) }}"
+                                    <a href="{{ route('tournaments.edit', $tournament) }}"
                                         class="btn btn-warning mt-2">Edytuj</a>
-                                    <form action="{{ route('admin.tournaments.destroy', $tournament) }}" method="POST"
+                                    <form action="{{ route('tournaments.destroy', $tournament) }}" method="POST"
                                         class="d-inline">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger mt-2">Usuń</button>
                                     </form>
                                 </div>
-                            @endif
+                            @endcan
+                            {{-- @endif --}}
                         </div>
                     </div>
                 @empty

@@ -37,11 +37,11 @@
                                     <td>{{ $user->avatar }}</td>
                                     <td>
                                         @can('update', $user)
-                                            <a href="{{ route('admin.users.edit', $user) }}">Edycja</a>
+                                            <a href="{{ route('users.edit', $user) }}">Edycja</a>
                                         @endcan
                                     </td>
                                     <td>
-                                        <form method="POST" action="{{ route('admin.users.destroy', $user->id) }}">
+                                        <form method="POST" action="{{ route('users.destroy', $user->id) }}">
                                             @csrf
                                             @method('DELETE')
                                             <input type="submit" class="btn btn-danger" value="Usuń"

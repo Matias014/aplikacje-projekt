@@ -11,12 +11,12 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-        return view('admin.users.users', ['users' => $users]);
+        return view('admin.users.index', ['users' => $users]);
     }
 
     public function create()
     {
-        return view('admin.user.create');
+        return view('admin.users.create');
     }
 
     public function store(Request $request)
@@ -39,7 +39,7 @@ class UserController extends Controller
             'avatar' => $request->avatar,
         ]);
 
-        return redirect()->route('admin.users.index')->with('success', 'Użytkownik został pomyślnie dodany.');
+        return redirect()->route('users.index')->with('success', 'Użytkownik został pomyślnie dodany.');
     }
 
     public function show(User $user)
@@ -49,7 +49,7 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-        return view('users.edit', ['user' => $user]);
+        return view('user.edit', ['user' => $user]);
     }
 
     public function update(Request $request, User $user)
@@ -59,7 +59,7 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'surname' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
-            'password' => 'nullable|string|min:8|confirmed',
+            'password' => 'nullable|string|max:100',
             'avatar' => 'nullable|string|max:255',
         ]);
 
@@ -72,12 +72,12 @@ class UserController extends Controller
             'avatar' => $request->avatar,
         ]);
 
-        return redirect()->route('admin.users.index')->with('success', 'Użytkownik został pomyślnie zaktualizowany.');
+        return redirect()->route('users.index')->with('success', 'Użytkownik został pomyślnie zaktualizowany.');
     }
 
     public function destroy(User $user)
     {
         $user->delete();
-        return redirect()->route('admin.users.index')->with('success', 'Użytkownik został pomyślnie usunięty.');
+        return redirect()->route('users.index')->with('success', 'Użytkownik został pomyślnie usunięty.');
     }
 }

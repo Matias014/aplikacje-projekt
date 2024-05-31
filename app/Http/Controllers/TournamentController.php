@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreTournamentRequest;
 use App\Http\Requests\UpdateTournamentRequest;
 use App\Models\Tournament;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -35,6 +36,17 @@ class TournamentController extends Controller
     public function store(StoreTournamentRequest $request)
     {
         $input = $request->all();
+
+        // Sprawdzenie, czy plik został przesłany
+        if ($request->hasFile('img')) {
+            // Zapisanie pliku na serwerze
+            $imageName = time() . '.' . $request->img->extension();
+            $request->img->move(public_path('storage/img'), $imageName);
+
+            // Zapisanie nazwy pliku w danych wejściowych
+            $input['img'] = $imageName;
+        }
+
         Tournament::create($input);
 
         return redirect()->route('tournaments.index');
@@ -47,9 +59,9 @@ class TournamentController extends Controller
     {
         $tournament = Tournament::with(['participants', 'answers.user'])->findOrFail($id);
 
-        $teams = $tournament->participants->pluck('pivot.team')->unique();
+        // $teams = $tournament->participants->pluck('pivot.team')->unique(); // do poprawy koniecznie!!!!!!!!!!
 
-        return view('tournaments.show', ['tournament' => $tournament, 'teams' => $teams]);
+        return view('tournaments.show', ['tournament' => $tournament, 'teams' => ['A', 'B']]);
     }
 
     /**
@@ -57,6 +69,10 @@ class TournamentController extends Controller
      */
     public function edit(Tournament $tournament)
     {
+        if (!Gate::allows('is-admin')) {
+            // abort(403);
+            return view('errors.403');
+        }
         return view('admin.tournament.edit', ['tournament' => $tournament]);
     }
 
@@ -69,7 +85,7 @@ class TournamentController extends Controller
             abort(403);
         }
 
-        // Gate::authorize('update', $tournament);
+        Gate::authorize('update', $tournament);
 
         $input = $request->all();
         $tournament->update($input);
@@ -85,32 +101,40 @@ class TournamentController extends Controller
         return redirect()->route('tournaments.index');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function storeParticipant(Request $request, Tournament $tournament)
-    {
-        $request->validate([
-            'team' => 'required|string|max:20',
-        ]);
+    // /**
+    //  * Store a newly created resource in storage.
+    //  */
+    // public function storeParticipant(Request $request, Tournament $tournament)
+    // {
+    //     $request->validate([
+    //         'team' => 'required|string|max:20',
+    //     ]);
 
-        $team = $request->input('team');
+    //     $team = $request->input('team');
 
-        if ($tournament->hasReachedMaxTeamSize($team)) {
-            return redirect()->route('tournaments.show', $tournament)
-                ->withErrors('Drużyna osiągnęła maksymalną liczbę członków.');
-        }
+    //     // Pobieramy ilość graczy w danej drużynie
+    //     $teamCount = $tournament->participants()->wherePivot('team', $team)->count();
 
-        $tournament->participants()->attach(Auth::id(), ['team' => $team]);
+    //     // Pobieramy maksymalną ilość graczy dla danej drużyny z atrybutów turnieju
+    //     $maxTeamSize = $tournament->getAttribute("max_team_$team");
 
-        return redirect()->route('tournaments.show', $tournament)
-            ->with('success', 'Zapisano do turnieju.');
-    }
+    //     if ($teamCount >= $maxTeamSize) {
+    //         return redirect()->route('tournaments.show', $tournament)
+    //             ->withErrors('Drużyna osiągnęła maksymalną liczbę członków.');
+    //     }
 
-    public function destroyParticipant(Request $request, Tournament $tournament)
-    {
-        $tournament->participants()->detach(Auth::id());
+    //     // Dodajemy uczestnika do turnieju z odpowiednią drużyną
+    //     $tournament->participants()->attach(Auth::id(), ['team' => $team]);
 
-        return redirect()->route('tournaments.show', $tournament);
-    }
+    //     return redirect()->route('tournaments.show', $tournament)
+    //         ->with('success', 'Zapisano do turnieju.');
+    // }
+
+
+    // public function destroyParticipant(Tournament $tournament, User $participant)
+    // {
+    //     $tournament->participants()->detach($participant->id);
+
+    //     return redirect()->route('tournaments.show', $tournament);
+    // }
 }

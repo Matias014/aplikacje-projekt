@@ -3,56 +3,43 @@
 namespace App\Http\Controllers;
 
 use App\Models\Participant;
+use App\Models\Tournament;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ParticipantController extends Controller
 {
-    public function index()
+    public function store(Request $request, Tournament $tournament)
     {
-        $participants = Participant::all();
-        // dla admina dodam możliwość zobaczenia wszystkich turniejów i użytkowników, którzy są przypisani do nich w formie tabelki
-        // będzie ich mógł usuwać
-
-        // return view('trips.index', [
-        //     'trips' => $trips,
-        //     'randomTrips' => $trips->random(4),
-        // ]);
-    }
-
-    public function show($id)
-    {
-        return view('trips.show', [
-            'trip' => Trip::findOrFail($id)
+        $request->validate([
+            'team' => 'required|string|max:20',
         ]);
-    }
 
-    public function edit($id)
-    {
-        $trip = Trip::findOrFail($id);
-        return view('trips.edit', [
-            'trip' => $trip,
-            'countries' => Country::all()
-        ]);
-    }
+        $team = $request->input('team');
 
-    public function update(Request $request, $id)
-    {
-        if (!Gate::allows('is-admin')) {
-            abort(403);
+        // Pobieramy ilość graczy w danej drużynie
+        $teamCount = $tournament->participants()->wherePivot('team', $team)->count();
+
+        // Pobieramy maksymalną ilość graczy dla danej drużyny z atrybutów turnieju
+        $maxTeamSize = $tournament->getAttribute("max_team_$team");
+
+        if ($teamCount >= $maxTeamSize) {
+            return redirect()->route('tournaments.show', $tournament)
+                ->withErrors('Drużyna osiągnęła maksymalną liczbę członków.');
         }
 
-        $request->validate([
-            'name' => 'required|string|unique:trips,name,'.$id,
-            'continent' => 'required|string',
-            'period' => 'required|integer|min:0',
-            'price' => 'required|numeric|min:0',
-            'img' => 'required|string',
-            'country_id' => 'required|integer|exists:countries,id',
-        ]);
+        // Dodajemy uczestnika do turnieju z odpowiednią drużyną
+        $tournament->participants()->attach(Auth::id(), ['team' => $team]);
 
-        $trip = Trip::findOrFail($id);
-        $input = $request->all();
-        $trip->update($input);
-        return redirect()->route('trips.index');
+        return redirect()->route('tournaments.show', $tournament)
+            ->with('success', 'Zapisano do turnieju.');
+    }
+
+    public function destroy(Tournament $tournament, Participant $participant)
+    {
+        $tournament->participants()->detach($participant->id);
+
+        return redirect()->route('tournaments.show', $tournament);
     }
 }

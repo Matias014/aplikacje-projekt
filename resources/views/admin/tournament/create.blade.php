@@ -2,7 +2,7 @@
 
 @include('shared.head', ['pageTitle' => 'Dodaj nowy turniej'])
 
-<body>
+<body class="d-flex flex-column min-vh-100">
     @include('shared.navbar')
 
     <div class="container mt-5 mb-5">
@@ -17,7 +17,7 @@
 
         <div class="row d-flex justify-content-center">
             <div class="col-6">
-                <form method="POST" action="{{ route('admin.tournaments.store') }}" class="needs-validation" novalidate>
+                <form method="POST" action="{{ route('tournaments.store') }}" class="needs-validation" enctype="multipart/form-data" novalidate>
                     @csrf
                     <div class="form-group mb-2">
                         <label for="name" class="form-label">Nazwa</label>
@@ -50,42 +50,28 @@
                         <div class="invalid-feedback">Nieprawidłowa cena!</div>
                     </div>
                     <div class="form-group mb-2">
-                        <label for="img" class="form-label">Nazwa obrazka</label>
-                        <input id="img" name="img" type="text"
-                            class="form-control @if ($errors->first('img')) is-invalid @endif"
-                            value="{{ old('img') }}">
-                        <div class="invalid-feedback">Nieprawidłowa nazwa obrazka!</div>
+                        <label for="img" class="form-label">Zdjęcie turnieju</label>
+                        <input id="img" name="img" type="file"
+                            class="form-control @if ($errors->first('image')) is-invalid @endif"
+                            multiple accept=".jpg, .jpeg">
+                        <div class="invalid-feedback">Nieprawidłowy plik zdjęcia!</div>
                     </div>
                     <div class="form-group mb-2">
-                        <label for="max_team_alfa" class="form-label">Max Team Alfa</label>
-                        <input id="max_team_alfa" name="max_team_alfa" type="number" min="0"
-                            class="form-control @if ($errors->first('max_team_alfa')) is-invalid @endif"
-                            value="{{ old('max_team_alfa') }}">
+                        <label for="max_team_A" class="form-label">Max Team A</label>
+                        <input id="max_team_A" name="max_team_alfa" type="number" min="0"
+                            class="form-control @if ($errors->first('max_team_A')) is-invalid @endif"
+                            value="{{ old('max_team_A') }}">
                         <div class="invalid-feedback">Nieprawidłowa wartość!</div>
                     </div>
                     <div class="form-group mb-2">
-                        <label for="max_team_beta" class="form-label">Max Team Beta</label>
-                        <input id="max_team_beta" name="max_team_beta" type="number" min="0"
-                            class="form-control @if ($errors->first('max_team_beta')) is-invalid @endif"
-                            value="{{ old('max_team_beta') }}">
-                        <div class="invalid-feedback">Nieprawidłowa wartość!</div>
-                    </div>
-                    <div class="form-group mb-2">
-                        <label for="max_team_gamma" class="form-label">Max Team Gamma</label>
-                        <input id="max_team_gamma" name="max_team_gamma" type="number" min="0"
-                            class="form-control @if ($errors->first('max_team_gamma')) is-invalid @endif"
-                            value="{{ old('max_team_gamma') }}">
-                        <div class="invalid-feedback">Nieprawidłowa wartość!</div>
-                    </div>
-                    <div class="form-group mb-2">
-                        <label for="max_team_delta" class="form-label">Max Team Delta</label>
-                        <input id="max_team_delta" name="max_team_delta" type="number" min="0"
-                            class="form-control @if ($errors->first('max_team_delta')) is-invalid @endif"
-                            value="{{ old('max_team_delta') }}">
+                        <label for="max_team_B" class="form-label">Max Team B</label>
+                        <input id="max_team_B" name="max_team_B" type="number" min="0"
+                            class="form-control @if ($errors->first('max_team_B')) is-invalid @endif"
+                            value="{{ old('max_team_B') }}">
                         <div class="invalid-feedback">Nieprawidłowa wartość!</div>
                     </div>
                     <div class="text-center mt-4 mb-4">
-                        <input class="btn btn-success" type="submit" value="Wyślij">
+                        <input class="btn btn-success" type="submit" value="Dodaj">
                     </div>
                 </form>
             </div>

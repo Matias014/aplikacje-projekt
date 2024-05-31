@@ -56,12 +56,6 @@
                         <div class="invalid-feedback">Nieprawidłowe hasło!</div>
                     </div>
                     <div class="form-group mb-2">
-                        <label for="password_confirmation" class="form-label">Potwierdź hasło</label>
-                        <input id="password_confirmation" name="password_confirmation" type="password"
-                            class="form-control @if ($errors->first('password_confirmation')) is-invalid @endif">
-                        <div class="invalid-feedback">Hasła nie pasują do siebie!</div>
-                    </div>
-                    <div class="form-group mb-2">
                         <label for="avatar" class="form-label">Avatar</label>
                         <input id="avatar" name="avatar" type="text"
                             class="form-control @if ($errors->first('avatar')) is-invalid @endif"

@@ -18,7 +18,7 @@
                 @if (Auth::check())
                     <li class="nav-link">
                         <a class="nav-link  @if (str_contains(request()->path(), 'users')) active @endif"
-                             href="{{ route('admin.users.show', Auth::user()->id) }}">Konto</a>
+                             href="{{ route('users.show', Auth::user()->id) }}">Konto</a>
                     </li>
                 @endif
                 @if (Auth::check() && Auth::user()->role == 'admin')

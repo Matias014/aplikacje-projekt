@@ -26,10 +26,8 @@ class TournamentSeeder extends Seeder
                     'date' => '2024-05-31 12:00:00',
                     'price' => '30',
                     'img' => 'turniej1.jpg',
-                    'max_team_alfa' => '3',
-                    'max_team_beta' => '3',
-                    'max_team_gamma' => '3',
-                    'max_team_delta' => '3'
+                    'max_team_A' => '10',
+                    'max_team_B' => '10'
                 ],
                 [
                     'name' => 'Turniej młodzieżowy',
@@ -37,10 +35,8 @@ class TournamentSeeder extends Seeder
                     'date' => '2024-06-30 13:00:00',
                     'price' => '20',
                     'img' => 'turniej2.jpg',
-                    'max_team_alfa' => '2',
-                    'max_team_beta' => '2',
-                    'max_team_gamma' => '2',
-                    'max_team_delta' => '2'
+                    'max_team_A' => '10',
+                    'max_team_B' => '10'
                 ]
             ]
         );

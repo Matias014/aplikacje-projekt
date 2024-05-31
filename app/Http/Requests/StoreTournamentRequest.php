@@ -26,11 +26,9 @@ class StoreTournamentRequest extends FormRequest
             'description' => 'nullable|string|max:255',
             'date' => 'required|date',
             'price' => 'required|numeric|min:0',
-            'img' => 'nullable|string|max:255',
-            'max_team_alfa' => 'required|integer|min:0',
-            'max_team_beta' => 'required|integer|min:0',
-            'max_team_gamma' => 'required|integer|min:0',
-            'max_team_delta' => 'required|integer|min:0',
+            'img' => 'required|mimes:jpeg,jpg|max:1024',
+            'max_team_A' => 'required|integer|min:0',
+            'max_team_B' => 'required|integer|min:0'
         ];
     }
 }

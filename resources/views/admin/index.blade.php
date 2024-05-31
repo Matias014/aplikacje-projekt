@@ -12,7 +12,7 @@
                     <div class="card-body text-center">
                         <h5 class="card-title">Zarządzaj użytkownikami</h5>
                         <p class="card-text">Przeglądaj, edytuj i usuwaj użytkowników.</p>
-                        <a href="{{ route('admin.users.index') }}" class="btn btn-primary">Zarządzaj użytkownikami</a>
+                        <a href="{{ route('users.index') }}" class="btn btn-primary">Zarządzaj użytkownikami</a>
                     </div>
                 </div>
             </div>
@@ -21,7 +21,7 @@
                     <div class="card-body text-center">
                         <h5 class="card-title">Zarządzaj turniejami</h5>
                         <p class="card-text">Dodawaj, edytuj i usuwaj turnieje.</p>
-                        <a href="{{ route('admin.tournaments.index') }}" class="btn btn-primary">Zarządzaj
+                        <a href="{{ route('tournaments.index') }}" class="btn btn-primary">Zarządzaj
                             turniejami</a>
                     </div>
                 </div>

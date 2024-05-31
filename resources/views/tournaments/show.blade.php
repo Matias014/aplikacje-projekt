@@ -18,22 +18,22 @@
                             <p class="card-text">Cena wejściowa: {{ $tournament->price }} zł</p>
                             @auth
                                 @if ($tournament->participants->contains(Auth::id()))
-                                    <form action="{{ route('tournaments.participants.destroy', $tournament) }}"
-                                        method="POST">
+                                    <form action="{{ route('participants.destroy', $tournament) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger mt-2">Wypisz się</button>
                                     </form>
                                 @else
-                                    <form action="{{ route('tournaments.participants.store', $tournament) }}"
-                                        method="POST">
+                                    <form action="{{ route('participants.store', $tournament) }}" method="POST">
                                         @csrf
                                         <div class="form-group">
                                             <label for="team">Wybierz drużynę</label>
                                             <select name="team" id="team" class="form-control" required>
-                                                @foreach ($teams as $team)
+                                                {{-- @foreach ($teams as $team)
                                                     <option value="{{ $team }}">{{ $team }}</option>
-                                                @endforeach
+                                                @endforeach --}}
+                                                <option value="A">Drużyna A</option>
+                                                <option value="B">Drużyna B</option>
                                             </select>
                                         </div>
                                         <button type="submit" class="btn btn-light mt-2">Zapisz się</button>
@@ -45,6 +45,7 @@
                 </div>
             </div>
             <div class="row d-flex justify-content-center">
+                @include('shared.validation-error')
                 <div class="col-12 col-lg-6 mt-5">
                     <h1>Uczestnicy</h1>
                     <div class="row">
@@ -62,12 +63,22 @@
                                         @foreach ($participants as $participant)
                                             <div class="participant d-flex align-items-center mb-3">
                                                 <img src="{{ asset('img/' . $participant->avatar) }}"
-                                                    alt="{{ $participant->name }}" class="rounded-circle"
-                                                    width="50" height="50">
+                                                    alt="{{ $participant->name }}" class="rounded-circle" width="50"
+                                                    height="50">
                                                 <div class="ms-3">
                                                     <p class="mb-0"><strong>{{ $participant->name }}
                                                             {{ $participant->surname }}</strong></p>
                                                 </div>
+                                                @can('is-admin')
+                                                    <form
+                                                        action="{{ route('participants.destroy', ['tournament' => $tournament, 'participant' => $participant]) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger btn-sm">Usuń z
+                                                            drużyny</button>
+                                                    </form>
+                                                @endcan
                                             </div>
                                         @endforeach
                                     </div>
@@ -86,7 +97,7 @@
                                 <p class="card-text">{{ $answer->answer }}</p>
                                 <footer class="blockquote-footer">{{ $answer->user->name }}
                                     {{ $answer->user->surname }}</footer>
-                                @if ($answer->user_id === Auth::id())
+                                @if (Auth::check() && (Auth::user()->role == 'admin' || $answer->user_id === Auth::id()))
                                     <div class="d-flex justify-content-end">
                                         <button class="btn btn-primary btn-sm me-2"
                                             onclick="showEditForm({{ $answer->id }})">Edytuj</button>

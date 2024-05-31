@@ -17,11 +17,11 @@ return new class extends Migration
             $table->string('description', 255)->nullable();
             $table->timestamp('date');
             $table->decimal('price', 8, 2);
-            $table->string('img')->nullable();
-            $table->integer('max_team_alfa')->default(0);
-            $table->integer('max_team_beta')->default(0);
-            $table->integer('max_team_gamma')->default(0);
-            $table->integer('max_team_delta')->default(0);
+            $table->string('img', 40)->nullable();
+            $table->integer('max_team_A')->default(0);
+            $table->integer('max_team_B')->default(0);
+            // $table->integer('max_team_gamma')->default(0);
+            // $table->integer('max_team_delta')->default(0);
             // $table->timestamps();
         });
     }

@@ -2,13 +2,13 @@
 
 @include('shared.head', ['pageTitle' => 'Strona główna'])
 
-<body>
+<body class="d-flex flex-column min-vh-100">
     @include('shared.navbar')
 
     <main>
         <div class="container-fluid p-0">
             <div class="hero-section text-center text-white d-flex align-items-center justify-content-center"
-                style="background-image: url('img/paintballMatch.webp'); background-size: cover; height: 70vh;">
+                style="background-image: url('img/paintballMatch.jpg'); background-size: cover; height: 70vh;">
                 <div class="content d-flex flex-column justify-content-center"
                     style="z-index: 1; background-color: rgba(0, 0, 0, 0.5); width: 100%; height: 100%;">
                     <h1 class="display-3">Witamy w Klubie Paintballowym</h1>
@@ -20,7 +20,7 @@
         <div class="container mt-5">
             <div class="row">
                 <div class="col-md-6">
-                    <img src="img/paintballMatch.webp" alt="Obraz przedstawiający mecz paintballa"
+                    <img src="img/paintballMatch.jpg" alt="Obraz przedstawiający mecz paintballa"
                         class="img-fluid rounded">
                 </div>
                 <div class="col-md-6 d-flex flex-column justify-content-center">
@@ -45,21 +45,21 @@
             </div>
             <div class="carousel-inner">
                 <div class="carousel-item active" data-bs-interval="6000">
-                    <img src="img/slide1.webp" class="d-block w-100" alt="Slide 1">
+                    <img src="img/slide1.jpg" class="d-block w-100" alt="Slide 1">
                     <div class="carousel-caption d-none d-md-block text-white">
                         <h5>Intensywne rozgrywki</h5>
                         <p>Przeżyj niezapomniane chwile z naszym klubem paintballowym.</p>
                     </div>
                 </div>
                 <div class="carousel-item" data-bs-interval="10000">
-                    <img src="img/slide2.webp" class="d-block w-100" alt="Slide 2">
+                    <img src="img/slide2.jpg" class="d-block w-100" alt="Slide 2">
                     <div class="carousel-caption d-none d-md-block text-white">
                         <h5>Zawodowi gracze</h5>
                         <p>Dołącz do naszych profesjonalnych zawodników i zdobywaj doświadczenie.</p>
                     </div>
                 </div>
                 <div class="carousel-item" data-bs-interval="10000">
-                    <img src="img/slide3.webp" class="d-block w-100" alt="Slide 3">
+                    <img src="img/slide3.jpg" class="d-block w-100" alt="Slide 3">
                     <div class="carousel-caption d-none d-md-block text-white">
                         <h5>Najlepsze turnieje</h5>
                         <p>Sprawdź naszą ofertę turniejów i wybierz coś dla siebie.</p>
@@ -82,7 +82,7 @@
             <div class="row text-center">
                 <div class="col-md-4">
                     <div class="card mb-4 shadow-sm">
-                        <img src="{{ asset('storage/img/benefit1.webp') }}" class="card-img-top" alt="Benefit 1">
+                        <img src="{{ asset('storage/img/benefit1.jpg') }}" class="card-img-top" alt="Benefit 1">
                         <div class="card-body">
                             <h5 class="card-title">Profesjonalne wyposażenie</h5>
                             <p class="card-text">Zapewniamy najnowsze i najlepsze wyposażenie dla naszych członków.</p>
@@ -91,7 +91,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="card mb-4 shadow-sm">
-                        <img src="{{ asset('storage/img/benefit2.webp') }}" class="card-img-top" alt="Benefit 2">
+                        <img src="{{ asset('storage/img/benefit2.jpg') }}" class="card-img-top" alt="Benefit 2">
                         <div class="card-body">
                             <h5 class="card-title">Bezpieczne warunki</h5>
                             <p class="card-text">Dbamy o bezpieczeństwo naszych graczy podczas każdego meczu.</p>
@@ -100,7 +100,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="card mb-4 shadow-sm">
-                        <img src="{{ asset('storage/img/benefit3.webp') }}" class="card-img-top" alt="Benefit 3">
+                        <img src="{{ asset('storage/img/benefit3.jpg') }}" class="card-img-top" alt="Benefit 3">
                         <div class="card-body">
                             <h5 class="card-title">Doskonała lokalizacja</h5>
                             <p class="card-text">Nasze pole paintballowe znajduje się w malowniczej okolicy.</p>

@@ -19,42 +19,42 @@ class ParticipantSeeder extends Seeder
                 [
                     'tournament_id' => '1',
                     'user_id' => '2',
-                    'team' => 'Alfa'
+                    'team' => 'A'
                 ],
                 [
-                    'tournament_id' => '2',
+                    'tournament_id' => '1',
                     'user_id' => '3',
-                    'team' => 'Delta'
+                    'team' => 'B'
                 ],
                 [
                     'tournament_id' => '1',
                     'user_id' => '4',
-                    'team' => 'Alfa'
-                ],
-                [
-                    'tournament_id' => '2',
-                    'user_id' => '5',
-                    'team' => 'Beta'
+                    'team' => 'A'
                 ],
                 [
                     'tournament_id' => '1',
+                    'user_id' => '5',
+                    'team' => 'B'
+                ],
+                [
+                    'tournament_id' => '2',
                     'user_id' => '6',
-                    'team' => 'Beta'
+                    'team' => 'A'
                 ],
                 [
                     'tournament_id' => '2',
                     'user_id' => '7',
-                    'team' => 'Gamma'
+                    'team' => 'B'
                 ],
                 [
-                    'tournament_id' => '1',
+                    'tournament_id' => '2',
                     'user_id' => '8',
-                    'team' => 'Beta'
+                    'team' => 'A'
                 ],
                 [
                     'tournament_id' => '2',
                     'user_id' => '9',
-                    'team' => 'Beta'
+                    'team' => 'B'
                 ],
             ]
         );

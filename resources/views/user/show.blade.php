@@ -2,7 +2,7 @@
 
 @include('shared.head', ['pageTitle' => 'Użytkownik - ' . $user->username])
 
-<body>
+<body class="d-flex flex-column min-vh-100">
     @include('shared.navbar')
 
     <div class="container mt-5 mb-5">
@@ -34,9 +34,9 @@
                 </tr>
                 <tr>
                     <th scope="col"></th>
-                    <td><a href="{{ route('admin.users.update', ['user' => $user->id]) }}"
+                    <td><a href="{{ route('users.edit', ['user' => $user->id]) }}"
                             class="btn btn-primary mb-2">Zmień dane</a>
-                        <form method="POST" action="{{ route('admin.users.destroy', $user->id) }}">
+                        <form method="POST" action="{{ route('users.destroy', $user->id) }}">
                             @csrf
                             @method('DELETE')
                             <input type="submit" class="btn btn-danger" value="Usuń konto" />

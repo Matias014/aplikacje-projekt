@@ -38,7 +38,7 @@ class AnswerController extends Controller
             'answer' => 'required|string|max:500',
         ]);
 
-        if ($answer->user_id !== Auth::id()) {
+        if (!Auth::user()->role == "admin" && $answer->user_id !== Auth::id()) {
             return redirect()->route('tournaments.show', $answer->tournament_id)->withErrors('Nie możesz zaktualizować ten komentarz.');
         }
 
@@ -54,7 +54,7 @@ class AnswerController extends Controller
      */
     public function destroy(Answer $answer)
     {
-        if ($answer->user_id !== Auth::id()) {
+        if (!Auth::user()->role == "admin" && $answer->user_id !== Auth::id()) {
             return redirect()->route('tournaments.show', $answer->tournament_id)->withErrors('Nie możesz usunąć ten komentarz.');
         }
 

@@ -17,7 +17,7 @@
 
         <div class="row d-flex justify-content-center">
             <div class="col-6">
-                <form method="POST" action="{{ route('admin.tournaments.update', ['tournament' => $tournament]) }}" class="needs-validation"
+                <form method="POST" action="{{ route('tournaments.update', ['tournament' => $tournament]) }}" class="needs-validation"
                     novalidate>
                     @csrf
                     @method('PUT')
@@ -59,31 +59,17 @@
                         <div class="invalid-feedback">Nieprawidłowa nazwa obrazka!</div>
                     </div>
                     <div class="form-group mb-2">
-                        <label for="max_team_alfa" class="form-label">Max Team Alfa</label>
-                        <input id="max_team_alfa" name="max_team_alfa" type="number" min="0"
-                            class="form-control @if ($errors->first('max_team_alfa')) is-invalid @endif"
-                            value="{{ $tournament->max_team_alfa }}">
+                        <label for="max_team_A" class="form-label">Max Team A</label>
+                        <input id="max_team_A" name="max_team_A" type="number" min="0"
+                            class="form-control @if ($errors->first('max_team_A')) is-invalid @endif"
+                            value="{{ $tournament->max_team_A }}">
                         <div class="invalid-feedback">Nieprawidłowa wartość!</div>
                     </div>
                     <div class="form-group mb-2">
-                        <label for="max_team_beta" class="form-label">Max Team Beta</label>
-                        <input id="max_team_beta" name="max_team_beta" type="number" min="0"
-                            class="form-control @if ($errors->first('max_team_beta')) is-invalid @endif"
-                            value="{{ $tournament->max_team_beta }}">
-                        <div class="invalid-feedback">Nieprawidłowa wartość!</div>
-                    </div>
-                    <div class="form-group mb-2">
-                        <label for="max_team_gamma" class="form-label">Max Team Gamma</label>
-                        <input id="max_team_gamma" name="max_team_gamma" type="number" min="0"
-                            class="form-control @if ($errors->first('max_team_gamma')) is-invalid @endif"
-                            value="{{ $tournament->max_team_gamma }}">
-                        <div class="invalid-feedback">Nieprawidłowa wartość!</div>
-                    </div>
-                    <div class="form-group mb-2">
-                        <label for="max_team_delta" class="form-label">Max Team Delta</label>
-                        <input id="max_team_delta" name="max_team_delta" type="number" min="0"
-                            class="form-control @if ($errors->first('max_team_delta')) is-invalid @endif"
-                            value="{{ $tournament->max_team_delta }}">
+                        <label for="max_team_B" class="form-label">Max Team B</label>
+                        <input id="max_team_B" name="max_team_B" type="number" min="0"
+                            class="form-control @if ($errors->first('max_team_B')) is-invalid @endif"
+                            value="{{ $tournament->max_team_B }}">
                         <div class="invalid-feedback">Nieprawidłowa wartość!</div>
                     </div>
                     <div class="text-center mt-4 mb-4">

@@ -23,13 +23,13 @@ class AnswerSeeder extends Seeder
                 ],
                 [
                     'user_id' => '3',
-                    'tournament_id' => '2',
-                    'answer' => 'Ciekawe, czy pogoda będzie dobra w dniu turnieju.'
-                ],
-                [
-                    'user_id' => '3',
                     'tournament_id' => '1',
                     'answer' => 'Hmm, powodzenia!'
+                ],
+                [
+                    'user_id' => '6',
+                    'tournament_id' => '2',
+                    'answer' => 'Ciekawe, czy pogoda będzie dobra w dniu turnieju.'
                 ],
             ]
         );

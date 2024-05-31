@@ -1,10 +1,13 @@
 @include('shared.html')
 
-@include('shared.head', ['pageTitle' => 'Błąd 404'])
+@include('shared.head', ['pageTitle' => 'Błąd 403'])
 
 <style>
     body {
         background-image: url("../../img/slide1.jpg");
+        background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
     }
 </style>
 
@@ -18,14 +21,14 @@
             </div>
         @endif
         <div class="row mt-4 mb-4 text-center card">
-            <h1 class="display-1 fw-bold">404</h1>
+            <h1 class="display-1 fw-bold">403</h1>
             <h2>
                 {{-- @if (App::environment('local'))
                     {{ $exception->getMessage() }}
                 @else
                     not found
                 @endif --}}
-                Nie znaleziono strony
+                Zabroniony dostęp
             </h2>
         </div>
 
