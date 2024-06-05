@@ -36,7 +36,7 @@ class UserSeeder extends Seeder
                     'surname' => 'Radzymińska',
                     'email' => 'paulina@example.com',
                     'password' => Hash::make('123'),
-                    'avatar' => 'paula.jpg',
+                    'avatar' => 'female.jpg',
                     'role' => 'user'
                 ],
                 [
@@ -45,7 +45,7 @@ class UserSeeder extends Seeder
                     'surname' => 'Potocki',
                     'email' => 'adrian@example.com',
                     'password' => Hash::make('123'),
-                    'avatar' => 'adrian.jpg',
+                    'avatar' => 'male.jpg',
                     'role' => 'user'
                 ],
                 [
@@ -54,7 +54,7 @@ class UserSeeder extends Seeder
                     'surname' => 'Kowalski',
                     'email' => 'tomasz@example.com',
                     'password' => Hash::make('123'),
-                    'avatar' => 'adrian.jpg',
+                    'avatar' => 'male.jpg',
                     'role' => 'user'
                 ],
                 [
@@ -63,7 +63,7 @@ class UserSeeder extends Seeder
                     'surname' => 'Oberżyński',
                     'email' => 'felix@example.com',
                     'password' => Hash::make('123'),
-                    'avatar' => 'adrian.jpg',
+                    'avatar' => 'male.jpg',
                     'role' => 'user'
                 ],
                 [
@@ -72,7 +72,7 @@ class UserSeeder extends Seeder
                     'surname' => 'Komarewski',
                     'email' => 'kryst@example.com',
                     'password' => Hash::make('123'),
-                    'avatar' => 'adrian.jpg',
+                    'avatar' => 'male.jpg',
                     'role' => 'user'
                 ],
                 [
@@ -81,7 +81,7 @@ class UserSeeder extends Seeder
                     'surname' => 'Prucnal',
                     'email' => 'agi@example.com',
                     'password' => Hash::make('123'),
-                    'avatar' => 'paula.jpg',
+                    'avatar' => 'female.jpg',
                     'role' => 'user'
                 ],
                 [
@@ -90,7 +90,7 @@ class UserSeeder extends Seeder
                     'surname' => 'Kamiński',
                     'email' => 'rafal@example.com',
                     'password' => Hash::make('123'),
-                    'avatar' => 'adrian.jpg',
+                    'avatar' => 'male.jpg',
                     'role' => 'user'
                 ],
                 [
@@ -99,7 +99,7 @@ class UserSeeder extends Seeder
                     'surname' => 'Puzio',
                     'email' => 'klaudia@example.com',
                     'password' => Hash::make('123'),
-                    'avatar' => 'paula.jpg',
+                    'avatar' => 'female.jpg',
                     'role' => 'user'
                 ],
                 [
@@ -108,7 +108,7 @@ class UserSeeder extends Seeder
                     'surname' => 'Skarbowicz',
                     'email' => 'zaneta@example.com',
                     'password' => Hash::make('123'),
-                    'avatar' => 'paula.jpg',
+                    'avatar' => 'female.jpg',
                     'role' => 'user'
                 ]
             ]

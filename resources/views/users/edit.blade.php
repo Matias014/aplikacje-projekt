@@ -17,8 +17,7 @@
 
         <div class="row d-flex justify-content-center">
             <div class="col-6">
-                <form method="POST" action="{{ route('users.update', $user) }}" class="needs-validation"
-                    novalidate>
+                <form method="POST" action="{{ route('users.update', $user) }}" class="needs-validation" enctype="multipart/form-data" novalidation>
                     @csrf
                     @method('PUT')
                     <div class="form-group mb-2">
@@ -57,13 +56,13 @@
                     </div>
                     <div class="form-group mb-2">
                         <label for="avatar" class="form-label">Avatar</label>
-                        <input id="avatar" name="avatar" type="text"
+                        <input id="avatar" name="avatar" type="file"
                             class="form-control @if ($errors->first('avatar')) is-invalid @endif"
                             value="{{ $user->avatar }}">
                         <div class="invalid-feedback">Nieprawidłowy avatar!</div>
                     </div>
                     <div class="text-center mt-4 mb-4">
-                        <input class="btn btn-success" type="submit" value="Wyślij">
+                        <input class="btn btn-success" type="submit" value="Zaktualizuj">
                     </div>
                 </form>
             </div>

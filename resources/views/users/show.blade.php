@@ -30,7 +30,7 @@
                 </tr>
                 <tr>
                     <th scope="col">Avatar</th>
-                    <td><img src="{{ asset('img/' . $user->avatar) }}" style="width: 50px; height: 50px;"></td>
+                    <td><img src="{{ asset('storage/img/' . $user->avatar) }}" style="width: 50px; height: 50px;"></td>
                 </tr>
                 <tr>
                     <th scope="col"></th>

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\StoreUserRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -19,65 +21,56 @@ class UserController extends Controller
         return view('admin.users.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
-        $request->validate([
-            'username' => 'required|string|max:20|unique:users',
-            'name' => 'required|string|max:20',
-            'surname' => 'required|string|max:25',
-            'email' => 'required|string|email|max:60|unique:users',
-            'password' => 'required|string|max:100|confirmed',
-            'avatar' => 'nullable|string|max:40',
-        ]);
+        $input = $request->all();
 
-        User::create([
-            'username' => $request->username,
-            'name' => $request->name,
-            'surname' => $request->surname,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'avatar' => $request->avatar,
-        ]);
+        if ($request->hasFile('avatar')) {
+            $imageName = $request->file('avatar')->getClientOriginalName();
+            $request->avatar->move(public_path('storage/img'), $imageName);
 
-        return redirect()->route('users.index')->with('success', 'Użytkownik został pomyślnie dodany.');
+            $input['avatar'] = $imageName;
+        }
+
+        $user = User::create($input);
+
+        return redirect()->route('users.show', $user)->with('success', 'Użytkownik został pomyślnie dodany.');
     }
 
     public function show(User $user)
     {
-        return view('user.show', ['user' => $user]);
+        return view('users.show', ['user' => $user]);
     }
 
     public function edit(User $user)
     {
-        return view('user.edit', ['user' => $user]);
+        return view('users.edit', ['user' => $user]);
     }
 
-    public function update(Request $request, User $user)
+    public function update(UpdateUserRequest $request, User $user)
     {
-        $request->validate([
-            'username' => 'required|string|max:255',
-            'name' => 'required|string|max:255',
-            'surname' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
-            'password' => 'nullable|string|max:100',
-            'avatar' => 'nullable|string|max:255',
-        ]);
+        $input = $request->all();
 
-        $user->update([
-            'username' => $request->username,
-            'name' => $request->name,
-            'surname' => $request->surname,
-            'email' => $request->email,
-            'password' => $request->password ? Hash::make($request->password) : $user->password,
-            'avatar' => $request->avatar,
-        ]);
+        if (empty($input['password'])) {
+            unset($input['password']);
+        } else {
+            $input['password'] = Hash::make($input['password']);
+        }
 
-        return redirect()->route('users.index')->with('success', 'Użytkownik został pomyślnie zaktualizowany.');
+        if ($request->hasFile('avatar')) {
+            $imageName = $request->file('avatar')->getClientOriginalName();
+            $request->avatar->move(public_path('storage/img'), $imageName);
+            $input['avatar'] = $imageName;
+        }
+
+        $user->update($input);
+
+        return redirect()->route('users.show', $user)->with('success', 'Użytkownik został pomyślnie zaktualizowany.');
     }
 
     public function destroy(User $user)
     {
         $user->delete();
-        return redirect()->route('users.index')->with('success', 'Użytkownik został pomyślnie usunięty.');
+        return redirect()->route('index')->with('success', 'Użytkownik został pomyślnie usunięty.');
     }
 }

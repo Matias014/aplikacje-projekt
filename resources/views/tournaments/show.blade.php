@@ -18,7 +18,7 @@
                             <p class="card-text">Cena wejściowa: {{ $tournament->price }} zł</p>
                             @auth
                                 @if ($tournament->participants->contains(Auth::id()))
-                                    <form action="{{ route('participants.destroy', $tournament) }}" method="POST">
+                                    <form action="{{ route('participants.destroy', ['tournament' => $tournament, 'participant' => Auth::id()]) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger mt-2">Wypisz się</button>
@@ -28,10 +28,7 @@
                                         @csrf
                                         <div class="form-group">
                                             <label for="team">Wybierz drużynę</label>
-                                            <select name="team" id="team" class="form-control" required>
-                                                {{-- @foreach ($teams as $team)
-                                                    <option value="{{ $team }}">{{ $team }}</option>
-                                                @endforeach --}}
+                                            <select name="team" id="team" class="form-select" required>
                                                 <option value="A">Drużyna A</option>
                                                 <option value="B">Drużyna B</option>
                                             </select>
@@ -96,7 +93,7 @@
                             <div class="card-body">
                                 <p class="card-text">{{ $answer->answer }}</p>
                                 <footer class="blockquote-footer">{{ $answer->user->name }}
-                                    {{ $answer->user->surname }}</footer>
+                                    {{ $answer->user->surname }} ({{ $answer->user->username }})</footer>
                                 @if (Auth::check() && (Auth::user()->role == 'admin' || $answer->user_id === Auth::id()))
                                     <div class="d-flex justify-content-end">
                                         <button class="btn btn-primary btn-sm me-2"

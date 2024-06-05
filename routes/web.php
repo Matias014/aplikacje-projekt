@@ -17,16 +17,17 @@ Route::get('/', function () {
 })->name('index');
 
 Route::controller(TournamentController::class)->group(function () {
+    Route::get('/tournaments/create', 'create')->name('tournaments.create');
     Route::get('/tournaments', 'index')->name('tournaments.index');
     Route::get('/tournaments/{tournament}', 'show')->name('tournaments.show');
+    Route::post('/tournaments', 'store')->name('tournaments.store');
     Route::get('/tournaments/{tournament}/edit', 'edit')->name('tournaments.edit');
-    Route::get('/tournaments/create', 'create')->name('tournaments.create');
     Route::put('/tournaments/{tournament}/update', 'update')->name('tournaments.update');
     Route::delete('/tournaments/{tournament}/destroy', 'destroy')->name('tournaments.destroy');
 });
 
 Route::controller(ParticipantController::class)->group(function () {
-    Route::post('/tournaments/{tournament}/participants/', 'store')->name('participants.store');
+    Route::post('/tournaments/{tournament}/participants', 'store')->name('participants.store');
     Route::delete('/tournaments/{tournament}/participants/{participant}', 'destroy')->name('participants.destroy');
 });
 
@@ -42,11 +43,7 @@ Route::controller(AuthController::class)->group(function () {
     Route::get('/auth/logout', 'logout')->name('logout');
 });
 
-// Route::resource('tournaments', TournamentController::class)->middleware('auth');
-// Route::resource('users', UserController::class)->middleware('auth');
-
 Route::middleware(['auth'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
     Route::resource('/users', UserController::class);
-    // Route::resource('/tournaments', TournamentController::class);
 });

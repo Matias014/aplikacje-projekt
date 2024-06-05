@@ -13,8 +13,14 @@ class ParticipantController extends Controller
     public function store(Request $request, Tournament $tournament)
     {
         $request->validate([
-            'team' => 'required|string|max:20',
+            'team' => 'required|string|in:A,B|max:20', // Zabezpieczenie wartości
         ]);
+
+        // Sprawdzenie, czy data rozpoczęcia turnieju jest większa niż obecna data
+        if ($tournament->date <= now()) {
+            return redirect()->route('tournaments.show', $tournament)
+                ->withErrors('Nie można zapisać się na turniej, który już się rozpoczął.');
+        }
 
         $team = $request->input('team');
 

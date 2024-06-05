@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name', 40)->unique();
             $table->string('description', 255)->nullable();
-            $table->timestamp('date');
-            $table->decimal('price', 8, 2);
+            $table->timestamp('date'); // data nie starsza nie starsza niż 01.01.2020
+            $table->decimal('price', 8, 2); // dodać dolne ograniczenie ceny
             $table->string('img', 40)->nullable();
             $table->integer('max_team_A')->default(0);
             $table->integer('max_team_B')->default(0);

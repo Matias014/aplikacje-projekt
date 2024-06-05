@@ -17,7 +17,8 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Tournament::class)->constrained();
             $table->foreignIdFor(User::class)->constrained();
-            $table->string('team', 20);
+            // $table->string('team', 20);
+            $table->enum('team', ['A', 'B']); // Użycie enum do ograniczenia wartości
         });
     }
 

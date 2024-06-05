@@ -27,7 +27,7 @@ class TournamentController extends Controller
      */
     public function create()
     {
-        return view('admin.tournament.create');
+        return view('admin.tournaments.create');
     }
 
     /**
@@ -37,13 +37,10 @@ class TournamentController extends Controller
     {
         $input = $request->all();
 
-        // Sprawdzenie, czy plik został przesłany
         if ($request->hasFile('img')) {
-            // Zapisanie pliku na serwerze
             $imageName = time() . '.' . $request->img->extension();
             $request->img->move(public_path('storage/img'), $imageName);
 
-            // Zapisanie nazwy pliku w danych wejściowych
             $input['img'] = $imageName;
         }
 
@@ -73,7 +70,7 @@ class TournamentController extends Controller
             // abort(403);
             return view('errors.403');
         }
-        return view('admin.tournament.edit', ['tournament' => $tournament]);
+        return view('admin.tournaments.edit', ['tournament' => $tournament]);
     }
 
     /**

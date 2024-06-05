@@ -26,7 +26,7 @@ class UpdateTournamentRequest extends FormRequest
             'description' => 'nullable|string|max:255',
             'date' => 'required|date',
             'price' => 'required|numeric|min:0',
-            'img' => 'nullable|string|max:255',
+            'img' => 'nullable|mimes:jpeg,jpg|max:1000',
             'max_team_A' => 'required|integer|min:0',
             'max_team_B' => 'required|integer|min:0'
         ];

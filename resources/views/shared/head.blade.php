@@ -6,16 +6,4 @@
     <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
     <link rel="icon" href="img/iconPaintball.png">
     <script defer src="{{ asset('js/bootstrap.bundle.js') }}"></script>
-    <style>
-        html,
-        body {
-            height: 100%;
-        }
-
-        footer {
-            position: relative;
-            bottom: 0;
-            width: 100%;
-        }
-    </style>
 </head>
