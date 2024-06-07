@@ -44,12 +44,12 @@ class ParticipantController extends Controller
     {
         $participant = $tournament->participants()->wherePivot('user_id', $participantId)->first();
 
-        if (!$participant) {
-            return redirect()->route('tournaments.show', $tournament)->withErrors('Uczestnik nie został znaleziony.');
-        }
-
         if (Gate::denies('delete', [$participant, $tournament])) {
             return redirect()->route('tournaments.show', $tournament)->withErrors('Nie masz uprawnień do usunięcia tego uczestnika.');
+        }
+
+        if (!$participant) {
+            return redirect()->route('tournaments.show', $tournament)->withErrors('Uczestnik nie został znaleziony.');
         }
 
         if ($tournament->date <= now()) {
