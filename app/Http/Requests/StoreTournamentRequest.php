@@ -24,11 +24,10 @@ class StoreTournamentRequest extends FormRequest
         return [
             'name' => 'required|string|unique:tournaments,name|max:40',
             'description' => 'nullable|string|max:255',
-            'date' => 'required|date',
+            'date' => 'required|date|after_or_equal:now',
             'price' => 'required|numeric|min:0',
-            'img' => 'required|max:1024',
-            'max_team_A' => 'required|integer|min:0',
-            'max_team_B' => 'required|integer|min:0'
+            'img' => 'required|image|max:500',
+            'max_participants' => 'required|integer|min:0'
         ];
     }
 }

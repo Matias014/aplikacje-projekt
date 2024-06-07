@@ -10,7 +10,7 @@ class Tournament extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'date', 'price', 'img', 'max_team_A', 'max_team_B'];
+    protected $fillable = ['name', 'description', 'date', 'price', 'img', 'max_participants'];
 
     public $timestamps = false;
 
@@ -23,10 +23,4 @@ class Tournament extends Model
     {
         return $this->hasMany(Answer::class);
     }
-
-    // public function hasReachedMaxTeamSize($team)
-    // {
-    //     $maxTeamSize = 4; // Maksymalna liczba członków w drużynie
-    //     return $this->participants()->wherePivot('team', $team)->count() >= $maxTeamSize;
-    // }
 }

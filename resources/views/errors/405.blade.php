@@ -1,6 +1,6 @@
 @include('shared.html')
 
-@include('shared.head', ['pageTitle' => 'Błąd 404'])
+@include('shared.head', ['pageTitle' => 'Błąd 405'])
 
 <style>
     body {
@@ -18,10 +18,10 @@
             </div>
         @endif
         <div class="row mt-4 mb-4 text-center card">
-            <h1 class="display-1 fw-bold">404</h1>
+            <h1 class="display-1 fw-bold">405</h1>
             <h2>
                 @if (App::environment('local'))
-                    Nie znaleziono strony
+                    Niedozwolona metoda
                 @else
                     Nie znaleziono
                 @endif

@@ -25,8 +25,7 @@ class TournamentSeeder extends Seeder
                 'date' => '2024-05-31 12:00:00',
                 'price' => '30',
                 'img' => 'turniej1.jpg',
-                'max_team_A' => '10',
-                'max_team_B' => '10'
+                'max_participants' => '10'
             ],
             [
                 'name' => 'Turniej młodzieżowy',
@@ -34,8 +33,7 @@ class TournamentSeeder extends Seeder
                 'date' => '2024-06-30 13:00:00',
                 'price' => '20',
                 'img' => 'turniej2.jpg',
-                'max_team_A' => '10',
-                'max_team_B' => '10'
+                'max_participants' => '10'
             ],
             [
                 'name' => 'Turniej wakacyjny',
@@ -43,8 +41,7 @@ class TournamentSeeder extends Seeder
                 'date' => '2024-07-15 14:00:00',
                 'price' => '25',
                 'img' => 'turniej3.jpg',
-                'max_team_A' => '12',
-                'max_team_B' => '12'
+                'max_participants' => '12'
             ],
             [
                 'name' => 'Turniej amatorów',
@@ -52,8 +49,15 @@ class TournamentSeeder extends Seeder
                 'date' => '2024-08-20 15:00:00',
                 'price' => '15',
                 'img' => 'turniej4.jpg',
-                'max_team_A' => '8',
-                'max_team_B' => '8'
+                'max_participants' => '8'
+            ],
+            [
+                'name' => 'Turniej studentów',
+                'description' => 'Wspaniała okazja, by móc odpocząć po trudach sesji i po zdanych kolokwiach!',
+                'date' => '2024-06-20 15:00:00',
+                'price' => '22.25',
+                'img' => 'turniej4.jpg',
+                'max_participants' => '20'
             ]
         ]);
     }

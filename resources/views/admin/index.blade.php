@@ -4,7 +4,7 @@
 
 <body class="d-flex flex-column min-vh-100">
     @include('shared.navbar')
-    <div class="container mt-5">
+    <div class="container mt-5 flex-grow-1">
         <h1 class="text-center mb-4">Panel Administratora</h1>
         <div class="row justify-content-center">
             <div class="col-12 col-md-6 col-lg-4 mb-4">

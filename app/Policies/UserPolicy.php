@@ -3,7 +3,6 @@
 namespace App\Policies;
 
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class UserPolicy
 {
@@ -20,7 +19,7 @@ class UserPolicy
      */
     public function view(User $user, User $model): bool
     {
-        return true;
+        return $user->id === $model->id;
     }
 
     /**
@@ -36,7 +35,7 @@ class UserPolicy
      */
     public function update(User $user, User $model): bool
     {
-        return $user->role == 'admin' || $user->role == $model->role;
+        return $user->role == 'admin' || $user->id === $model->id;
     }
 
     /**
@@ -44,7 +43,7 @@ class UserPolicy
      */
     public function delete(User $user, User $model): bool
     {
-        return $user->role == 'admin' || $user->role == $model->role; // ???? nwm czy to działa
+        return $user->role == 'admin' || $user->id === $model->id;
     }
 
     /**
@@ -60,6 +59,6 @@ class UserPolicy
      */
     public function forceDelete(User $user, User $model): bool
     {
-        return $user->role == 'admin';
+        return $user->role == 'admin' || $user->id === $model->id;
     }
 }

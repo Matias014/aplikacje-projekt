@@ -2,12 +2,16 @@
 
 namespace App\Providers;
 
-use App\Models\Country;
+use App\Models\Answer;
+use App\Models\Participant;
+use App\Models\Tournament;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use App\Models\User;
-use App\Policies\CountryPolicy;
+use App\Policies\AnswerPolicy;
+use App\Policies\ParticipantPolicy;
+use App\Policies\TournamentPolicy;
 use App\Policies\UserPolicy;
 
 class AppServiceProvider extends ServiceProvider
@@ -35,9 +39,8 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Gate::policy(User::class, UserPolicy::class);
-
-        Gate::before(function (User $user, string $ability) {
-            return $user->isAdmin();
-        });
+        Gate::policy(Tournament::class, TournamentPolicy::class);
+        Gate::policy(Answer::class, AnswerPolicy::class);
+        Gate::policy(Participant::class, ParticipantPolicy::class);
     }
 }

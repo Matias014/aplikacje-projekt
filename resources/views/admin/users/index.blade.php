@@ -10,6 +10,9 @@
             <div class="row mt-5">
                 <h1>Użytkownicy</h1>
             </div>
+            <div class="row mb-2">
+                <a href="{{ route('users.create') }}">Dodaj nowego użytkownika</a>
+            </div>
             @include('shared.session-error')
             <div class="row mt-5">
                 <div class="table-responsive-sm">

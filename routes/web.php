@@ -12,9 +12,7 @@ Route::get('/welcome', function () {
     return view('welcome');
 });
 
-Route::get('/', function () {
-    return view('index');
-})->name('index');
+Route::get('/', [TournamentController::class, 'statistics'])->name('index');
 
 Route::controller(TournamentController::class)->group(function () {
     Route::get('/tournaments/create', 'create')->name('tournaments.create');

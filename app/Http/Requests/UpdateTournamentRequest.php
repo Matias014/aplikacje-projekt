@@ -24,11 +24,10 @@ class UpdateTournamentRequest extends FormRequest
         return [
             'name' => 'required|string|unique:tournaments,name,' . $this->tournament->id . '|max:40',
             'description' => 'nullable|string|max:255',
-            'date' => 'required|date',
+            'date' => 'required|date|after_or_equal:now',
             'price' => 'required|numeric|min:0',
-            'img' => 'nullable|mimes:jpeg,jpg|max:1000',
-            'max_team_A' => 'required|integer|min:0',
-            'max_team_B' => 'required|integer|min:0'
+            'img' => 'nullable|image|max:500',
+            'max_participants' => 'required|integer|min:0'
         ];
     }
 }

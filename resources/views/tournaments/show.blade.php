@@ -17,24 +17,32 @@
                             <p class="card-text">Data turnieju: {{ $tournament->date }}</p>
                             <p class="card-text">Cena wejściowa: {{ $tournament->price }} zł</p>
                             @auth
-                                @if ($tournament->participants->contains(Auth::id()))
-                                    <form action="{{ route('participants.destroy', ['tournament' => $tournament, 'participant' => Auth::id()]) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger mt-2">Wypisz się</button>
-                                    </form>
-                                @else
-                                    <form action="{{ route('participants.store', $tournament) }}" method="POST">
-                                        @csrf
-                                        <div class="form-group">
-                                            <label for="team">Wybierz drużynę</label>
-                                            <select name="team" id="team" class="form-select" required>
-                                                <option value="A">Drużyna A</option>
-                                                <option value="B">Drużyna B</option>
-                                            </select>
-                                        </div>
-                                        <button type="submit" class="btn btn-light mt-2">Zapisz się</button>
-                                    </form>
+                                @if ($tournament->date > now())
+                                    @if ($tournament->participants->contains(Auth::id()))
+                                        <form
+                                            action="{{ route('participants.destroy', ['tournament' => $tournament, 'participant' => Auth::id()]) }}"
+                                            method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger mt-2">Wypisz się</button>
+                                        </form>
+                                    @else
+                                        <form action="{{ route('participants.store', $tournament) }}" method="POST">
+                                            @csrf
+                                            <div class="form-group">
+                                                <label for="team">Wybierz drużynę</label>
+                                                <select name="team" id="team" class="form-select" required>
+                                                    <option value="A">Drużyna A
+                                                        ({{ $teams->get('A', collect())->count() }}/{{ $maxParticipants }})
+                                                    </option>
+                                                    <option value="B">Drużyna B
+                                                        ({{ $teams->get('B', collect())->count() }}/{{ $maxParticipants }})
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <button type="submit" class="btn btn-light mt-2">Zapisz się</button>
+                                        </form>
+                                    @endif
                                 @endif
                             @endauth
                         </div>
@@ -46,38 +54,39 @@
                 <div class="col-12 col-lg-6 mt-5">
                     <h1>Uczestnicy</h1>
                     <div class="row">
-                        @php
-                            $teams = $tournament->participants->groupBy('pivot.team');
-                        @endphp
-
-                        @foreach ($teams as $team => $participants)
+                        @foreach (['A', 'B'] as $team)
                             <div class="col-12 col-md-6 mb-4 mt-4">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h2>Drużyna {{ $team }}</h2>
+                                        <h2>Drużyna {{ $team }}
+                                            ({{ $teams->get($team, collect())->count() }}/{{ $maxParticipants }})</h2>
                                     </div>
                                     <div class="card-body">
-                                        @foreach ($participants as $participant)
+                                        @forelse ($teams->get($team, collect()) as $participant)
                                             <div class="participant d-flex align-items-center mb-3">
-                                                <img src="{{ asset('img/' . $participant->avatar) }}"
-                                                    alt="{{ $participant->name }}" class="rounded-circle" width="50"
-                                                    height="50">
+                                                <img src="{{ asset('storage/img/' . $participant->avatar) }}"
+                                                    alt="{{ $participant->name }}" class="rounded-circle"
+                                                    width="50" height="50">
                                                 <div class="ms-3">
                                                     <p class="mb-0"><strong>{{ $participant->name }}
                                                             {{ $participant->surname }}</strong></p>
                                                 </div>
-                                                @can('is-admin')
-                                                    <form
-                                                        action="{{ route('participants.destroy', ['tournament' => $tournament, 'participant' => $participant]) }}"
-                                                        method="POST">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger btn-sm">Usuń z
-                                                            drużyny</button>
-                                                    </form>
-                                                @endcan
+                                                @if ($tournament->date > now())
+                                                    @can('is-admin')
+                                                        <form
+                                                            action="{{ route('participants.destroy', ['tournament' => $tournament, 'participant' => $participant->pivot->user_id]) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-danger btn-sm">Usuń z
+                                                                drużyny</button>
+                                                        </form>
+                                                    @endcan
+                                                @endif
                                             </div>
-                                        @endforeach
+                                        @empty
+                                            <p>Brak uczestników w tej drużynie.</p>
+                                        @endforelse
                                     </div>
                                 </div>
                             </div>
@@ -133,7 +142,6 @@
                     @endauth
                 </div>
             </div>
-
         </div>
     </main>
 

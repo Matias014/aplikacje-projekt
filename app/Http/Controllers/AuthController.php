@@ -35,7 +35,7 @@ class AuthController extends Controller
         }
 
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
+            'email' => 'Podane dane uwierzytelniające nie są zgodne z naszymi danymi.',
         ])->onlyInput('email');
     }
 
@@ -44,7 +44,6 @@ class AuthController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        // return redirect()->route('index');
         return redirect()->back();
     }
 

@@ -4,14 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Answer;
 use App\Models\Tournament;
-use Illuminate\Auth\Access\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class AnswerController extends Controller
 {
     public function store(Request $request, Tournament $tournament)
     {
+        Gate::authorize('create', [Answer::class, $tournament]);
+
         $request->validate([
             'answer' => 'required|string|max:500',
         ]);
@@ -34,6 +36,10 @@ class AnswerController extends Controller
      */
     public function update(Request $request, Answer $answer)
     {
+        if (Gate::denies('update', $answer)) {
+            return redirect()->route('tournaments.show', $answer->tournament_id)->withErrors('Nie możesz zaktualizować tego komentarza.');
+        }
+
         $request->validate([
             'answer' => 'required|string|max:500',
         ]);
@@ -54,6 +60,10 @@ class AnswerController extends Controller
      */
     public function destroy(Answer $answer)
     {
+        if (Gate::denies('delete', $answer)) {
+            return redirect()->route('tournaments.show', $answer->tournament_id)->withErrors('Nie możesz usunąć tego komentarza.');
+        }
+
         if (!Auth::user()->role == "admin" && $answer->user_id !== Auth::id()) {
             return redirect()->route('tournaments.show', $answer->tournament_id)->withErrors('Nie możesz usunąć ten komentarz.');
         }

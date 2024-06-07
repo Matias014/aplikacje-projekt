@@ -17,13 +17,14 @@
 
         <div class="row d-flex justify-content-center">
             <div class="col-6">
-                <form method="POST" action="{{ route('tournaments.store') }}" class="needs-validation" enctype="multipart/form-data" novalidate>
+                <form method="POST" action="{{ route('tournaments.store') }}" class="needs-validation"
+                    enctype="multipart/form-data" novalidate>
                     @csrf
                     <div class="form-group mb-2">
                         <label for="name" class="form-label">Nazwa</label>
                         <input id="name" name="name" type="text"
                             class="form-control @if ($errors->first('name')) is-invalid @endif"
-                            value="{{ old('name') }}">
+                            value="{{ old('name') }}" required>
                         <div class="invalid-feedback">Nieprawidłowa nazwa!</div>
                     </div>
                     <div class="form-group mb-2">
@@ -34,9 +35,9 @@
                     </div>
                     <div class="form-group mb-2">
                         <label for="date" class="form-label">Data</label>
-                        <input id="date" name="date" type="datetime-local"
+                        <input id="date" name="date" type="date"
                             class="form-control @if ($errors->first('date')) is-invalid @endif"
-                            value="{{ old('date') }}">
+                            value="{{ old('date') }}" min="{{ date('Y-m-d') }}" required>
                         <div class="invalid-feedback">Nieprawidłowa data!</div>
                     </div>
                     <div class="form-group mb-3">
@@ -44,7 +45,7 @@
                         <div class="input-group mb-3">
                             <input id="price" type="number" name="price" min="0" placeholder="0"
                                 step="any" class="form-control @if ($errors->first('price')) is-invalid @endif"
-                                value="{{ old('price') }}">
+                                value="{{ old('price') }}" required>
                             <span class="input-group-text"> PLN</span>
                         </div>
                         <div class="invalid-feedback">Nieprawidłowa cena!</div>
@@ -52,22 +53,14 @@
                     <div class="form-group mb-2">
                         <label for="img" class="form-label">Zdjęcie turnieju</label>
                         <input id="img" name="img" type="file"
-                            class="form-control @if ($errors->first('img')) is-invalid @endif"
-                            multiple accept=".jpg, .jpeg">
+                            class="form-control @if ($errors->first('img')) is-invalid @endif" required>
                         <div class="invalid-feedback">Nieprawidłowy plik zdjęcia!</div>
                     </div>
                     <div class="form-group mb-2">
-                        <label for="max_team_A" class="form-label">Max Team A</label>
-                        <input id="max_team_A" name="max_team_A" type="number" min="0"
-                            class="form-control @if ($errors->first('max_team_A')) is-invalid @endif"
-                            value="{{ old('max_team_A') }}">
-                        <div class="invalid-feedback">Nieprawidłowa wartość!</div>
-                    </div>
-                    <div class="form-group mb-2">
-                        <label for="max_team_B" class="form-label">Max Team B</label>
-                        <input id="max_team_B" name="max_team_B" type="number" min="0"
-                            class="form-control @if ($errors->first('max_team_B')) is-invalid @endif"
-                            value="{{ old('max_team_B') }}">
+                        <label for="max_participants" class="form-label">Max uczestników dla jednej drużyny</label>
+                        <input id="max_participants" name="max_participants" type="number" min="0"
+                            class="form-control @if ($errors->first('max_participants')) is-invalid @endif"
+                            value="{{ old('max_participants') }}" required>
                         <div class="invalid-feedback">Nieprawidłowa wartość!</div>
                     </div>
                     <div class="text-center mt-4 mb-4">

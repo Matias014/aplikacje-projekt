@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Requests\StoreUserRequest;
+use App\Models\Tournament;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 
@@ -18,6 +20,8 @@ class UserController extends Controller
 
     public function create()
     {
+        Gate::authorize('create', Auth::user());
+
         return view('admin.users.create');
     }
 
@@ -39,16 +43,27 @@ class UserController extends Controller
 
     public function show(User $user)
     {
-        return view('users.show', ['user' => $user]);
+        Gate::authorize('view', $user);
+
+        // Pobierz turnieje, w których użytkownik bierze udział
+        $tournaments = Tournament::whereHas('participants', function ($query) use ($user) {
+            $query->where('user_id', $user->id);
+        })->get();
+
+        return view('users.show', ['user' => $user, 'tournaments' => $tournaments]);
     }
 
     public function edit(User $user)
     {
+        Gate::authorize('update', $user);
+
         return view('users.edit', ['user' => $user]);
     }
 
     public function update(UpdateUserRequest $request, User $user)
     {
+        Gate::authorize('update', $user);
+
         $input = $request->all();
 
         if (empty($input['password'])) {
@@ -70,7 +85,9 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
+        Gate::authorize('delete', $user);
+
         $user->delete();
-        return redirect()->route('index')->with('success', 'Użytkownik został pomyślnie usunięty.');
+        return redirect()->back()->with('success', 'Użytkownik został pomyślnie usunięty.');
     }
 }

@@ -23,12 +23,32 @@ class AnswerSeeder extends Seeder
                 [
                     'user_id' => '3',
                     'tournament_id' => '1',
-                    'answer' => 'Hmm, powodzenia!'
+                    'answer' => 'Powodzenia!'
                 ],
                 [
                     'user_id' => '6',
                     'tournament_id' => '2',
                     'answer' => 'Ciekawe, czy pogoda będzie dobra w dniu turnieju.'
+                ],
+                [
+                    'user_id' => '6',
+                    'tournament_id' => '3',
+                    'answer' => 'Mam nadzieję, że zabawa będzie ekstra :D'
+                ],
+                [
+                    'user_id' => '7',
+                    'tournament_id' => '3',
+                    'answer' => 'Oby, zapowiada się na mega ciekawy turniej.'
+                ],
+                [
+                    'user_id' => '8',
+                    'tournament_id' => '3',
+                    'answer' => 'Powodzenia tam, na turnieju!.'
+                ],
+                [
+                    'user_id' => '4',
+                    'tournament_id' => '4',
+                    'answer' => 'Hmm, ciekawe, ile osób będzie brało udzial w tym turnieju.'
                 ],
             ]
         );

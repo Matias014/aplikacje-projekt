@@ -51,14 +51,14 @@
                         <p>Przeżyj niezapomniane chwile z naszym klubem paintballowym.</p>
                     </div>
                 </div>
-                <div class="carousel-item" data-bs-interval="10000">
+                <div class="carousel-item" data-bs-interval="6000">
                     <img src="img/slide2.jpg" class="d-block w-100" alt="Slide 2">
                     <div class="carousel-caption d-none d-md-block text-white">
                         <h5>Zawodowi gracze</h5>
                         <p>Dołącz do naszych profesjonalnych zawodników i zdobywaj doświadczenie.</p>
                     </div>
                 </div>
-                <div class="carousel-item" data-bs-interval="10000">
+                <div class="carousel-item" data-bs-interval="6000">
                     <img src="img/slide3.jpg" class="d-block w-100" alt="Slide 3">
                     <div class="carousel-caption d-none d-md-block text-white">
                         <h5>Najlepsze turnieje</h5>
@@ -109,9 +109,109 @@
                 </div>
             </div>
         </div>
+
+        <div class="container mt-5">
+            <h2 class="text-center">Statystyki</h2>
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <canvas id="matchesPerMonthChart"></canvas>
+                </div>
+                <div class="col-md-6">
+                    <canvas id="averagePricePerMonthChart"></canvas>
+                </div>
+            </div>
+            <div class="row mt-4 text-center">
+                <div class="col-md-6">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Mediana członków drużyn</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{ $participantsPerTeam }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-6 text-center">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Odchylenie standardowe od średniej ceny wszystkich kupionych wejść</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{ $priceStdDeviation }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </main>
 
     @include('shared.footer')
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const monthLabels = ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień',
+            'Październik', 'Listopad', 'Grudzień'
+        ];
+
+        const matchesPerMonthData = Array(12).fill(0);
+        @foreach ($matchesPerMonth as $month => $count)
+            matchesPerMonthData[{{ $month - 1 }}] = {{ $count }};
+        @endforeach
+
+        const averagePricePerMonthData = Array(12).fill(0);
+        @foreach ($averagePricePerMonth as $month => $avg_price)
+            averagePricePerMonthData[{{ $month - 1 }}] = {{ $avg_price }};
+        @endforeach
+
+        var matchesPerMonthChart = new Chart(document.getElementById('matchesPerMonthChart'), {
+            type: 'bar',
+            data: {
+                labels: monthLabels,
+                datasets: [{
+                    label: 'Liczba turniejów',
+                    data: matchesPerMonthData,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        var averagePricePerMonthChart = new Chart(document.getElementById('averagePricePerMonthChart'), {
+            type: 'bar',
+            data: {
+                labels: monthLabels,
+                datasets: [{
+                    label: 'Średnia cena wejść (PLN)',
+                    data: averagePricePerMonthData,
+                    backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                    borderColor: 'rgba(153, 102, 255, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 
 </html>

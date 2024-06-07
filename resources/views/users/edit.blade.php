@@ -5,7 +5,7 @@
 <body class="d-flex flex-column min-vh-100">
     @include('shared.navbar')
 
-    <div class="container mt-5 mb-5">
+    <div class="container mt-5 mb-5 flex-grow-1">
 
         @include('shared.session-error')
 
@@ -24,28 +24,28 @@
                         <label for="username" class="form-label">Username</label>
                         <input id="username" name="username" type="text"
                             class="form-control @if ($errors->first('username')) is-invalid @endif"
-                            value="{{ $user->username }}">
+                            value="{{ $user->username }}" required>
                         <div class="invalid-feedback">Nieprawidłowy username!</div>
                     </div>
                     <div class="form-group mb-2">
                         <label for="name" class="form-label">Imię</label>
                         <input id="name" name="name" type="text"
                             class="form-control @if ($errors->first('name')) is-invalid @endif"
-                            value="{{ $user->name }}">
+                            value="{{ $user->name }}" required>
                         <div class="invalid-feedback">Nieprawidłowe imię!</div>
                     </div>
                     <div class="form-group mb-2">
                         <label for="surname" class="form-label">Nazwisko</label>
                         <input id="surname" name="surname" type="text"
                             class="form-control @if ($errors->first('surname')) is-invalid @endif"
-                            value="{{ $user->surname }}">
+                            value="{{ $user->surname }}" required>
                         <div class="invalid-feedback">Nieprawidłowe nazwisko!</div>
                     </div>
                     <div class="form-group mb-2">
                         <label for="email" class="form-label">Email</label>
                         <input id="email" name="email" type="email"
                             class="form-control @if ($errors->first('email')) is-invalid @endif"
-                            value="{{ $user->email }}">
+                            value="{{ $user->email }}" required>
                         <div class="invalid-feedback">Nieprawidłowy email!</div>
                     </div>
                     <div class="form-group mb-2">
@@ -59,7 +59,7 @@
                         <input id="avatar" name="avatar" type="file"
                             class="form-control @if ($errors->first('avatar')) is-invalid @endif"
                             value="{{ $user->avatar }}">
-                        <div class="invalid-feedback">Nieprawidłowy avatar!</div>
+                        <div class="invalid-feedback">Nieprawidłowy plik zdjęcia!</div>
                     </div>
                     <div class="text-center mt-4 mb-4">
                         <input class="btn btn-success" type="submit" value="Zaktualizuj">

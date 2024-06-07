@@ -7,7 +7,7 @@ return [
     'accepted_if'          => 'Pole :attribute musi zostać zaakceptowane gdy :other ma wartość :value.',
     'active_url'           => 'Pole :attribute jest nieprawidłowym adresem URL.',
     'after'                => 'Pole :attribute musi być datą późniejszą od :date.',
-    'after_or_equal'       => 'Pole :attribute musi być datą nie wcześniejszą niż :date.',
+    'after_or_equal'       => 'Pole :attribute musi być datą równą lub późniejszą niż dzisiejsza.',
     'alpha'                => 'Pole :attribute może zawierać jedynie litery.',
     'alpha_dash'           => 'Pole :attribute może zawierać jedynie litery, cyfry i myślniki.',
     'alpha_num'            => 'Pole :attribute może zawierać jedynie litery i cyfry.',
