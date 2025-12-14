@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\ActivityLogger;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-
     public function login()
     {
         if (Auth::check()) {
@@ -16,12 +16,6 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
-    /**
-     * Handle an authentication attempt.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function authenticate(Request $request)
     {
         $credentials = $request->validate([
@@ -31,6 +25,7 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
+            ActivityLogger::log('auth.login', Auth::user());
             return redirect()->route('index');
         }
 
@@ -41,10 +36,10 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
+        ActivityLogger::log('auth.logout', Auth::user());
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect()->back();
     }
-
 }

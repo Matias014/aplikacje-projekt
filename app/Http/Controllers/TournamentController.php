@@ -4,15 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTournamentRequest;
 use App\Http\Requests\UpdateTournamentRequest;
+use App\Http\Requests\StatisticsFilterRequest;
 use App\Models\Tournament;
+use App\Services\ActivityLogger;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
 class TournamentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $currentDate = now();
@@ -25,19 +24,12 @@ class TournamentController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         Gate::authorize('create', Tournament::class);
-
         return view('admin.tournaments.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreTournamentRequest $request)
     {
         Gate::authorize('create', Tournament::class);
@@ -47,24 +39,19 @@ class TournamentController extends Controller
         if ($request->hasFile('img')) {
             $imageName = time() . '.' . $request->img->extension();
             $request->img->move(public_path('storage/img'), $imageName);
-
             $input['img'] = $imageName;
         }
 
-        Tournament::create($input);
+        $tournament = Tournament::create($input);
+        ActivityLogger::log('tournament.create', $tournament);
 
         return redirect()->route('tournaments.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show($id)
     {
         $tournament = Tournament::with(['participants', 'answers.user'])->findOrFail($id);
-
         $teams = $tournament->participants->groupBy('pivot.team');
-
         $maxParticipants = $tournament->max_participants;
 
         return view('tournaments.show', [
@@ -74,77 +61,127 @@ class TournamentController extends Controller
         ]);
     }
 
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Tournament $tournament)
     {
         Gate::authorize('update', $tournament);
-
         return view('admin.tournaments.edit', ['tournament' => $tournament]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateTournamentRequest $request, Tournament $tournament)
     {
         Gate::authorize('update', $tournament);
 
         $input = $request->all();
+
+        if ($request->hasFile('img')) {
+            $imageName = time() . '.' . $request->img->extension();
+            $request->img->move(public_path('storage/img'), $imageName);
+            $input['img'] = $imageName;
+        }
+
         $tournament->update($input);
+        ActivityLogger::log('tournament.update', $tournament);
+
         return redirect()->route('tournaments.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Tournament $tournament)
     {
         Gate::authorize('delete', $tournament);
-
+        $id = $tournament->id;
         $tournament->delete();
+        ActivityLogger::log('tournament.delete', (new Tournament(['id' => $id])));
         return redirect()->route('tournaments.index');
     }
 
-    public function statistics()
+    public function statistics(StatisticsFilterRequest $request)
     {
-        $currentYear = now()->year;
+        $v = $request->validated();
 
-        // Liczba meczy w każdym miesiącu
-        $matchesPerMonth = Tournament::select(DB::raw('MONTH(date) as month'), DB::raw('COUNT(*) as count'))
-            ->whereYear('date', '=', $currentYear)
+        $scope = $v['scope'] ?? null;
+        if ($scope === null) {
+            if (array_key_exists('include_past', $v) && $v['include_past'] !== null) {
+                $scope = $v['include_past'] ? 'all' : 'future';
+            } else {
+                $scope = 'all';
+            }
+        }
+        $includePast = $scope !== 'future';
+
+        $year = (int)($v['year'] ?? now()->year);
+        $dateFrom = $v['date_from'] ?? null;
+        $dateTo = $v['date_to'] ?? null;
+        $priceMin = array_key_exists('price_min', $v) ? $v['price_min'] : null;
+        $priceMax = array_key_exists('price_max', $v) ? $v['price_max'] : null;
+
+        $q = Tournament::query();
+
+        if ($dateFrom) {
+            $q->whereDate('date', '>=', $dateFrom);
+        }
+
+        if ($dateTo) {
+            $q->whereDate('date', '<=', $dateTo);
+        }
+
+        if (!$dateFrom && !$dateTo) {
+            $q->whereYear('date', '=', $year);
+        }
+
+        if ($scope === 'future') {
+            $q->where('date', '>', now());
+        }
+
+        if ($scope === 'past') {
+            $q->where('date', '<=', now());
+        }
+
+        if ($priceMin !== null) {
+            $q->where('price', '>=', (float)$priceMin);
+        }
+
+        if ($priceMax !== null) {
+            $q->where('price', '<=', (float)$priceMax);
+        }
+
+        $base = clone $q;
+
+        $matchesPerMonth = (clone $q)
+            ->select(DB::raw('MONTH(date) as month'), DB::raw('COUNT(*) as count'))
             ->groupBy('month')
             ->pluck('count', 'month')
             ->toArray();
 
-        // Średnia cena w każdym miesiącu
-        $averagePricePerMonth = Tournament::select(DB::raw('MONTH(date) as month'), DB::raw('AVG(price) as avg_price'))
-            ->whereYear('date', '=', $currentYear)
+        $averagePricePerMonth = (clone $q)
+            ->select(DB::raw('MONTH(date) as month'), DB::raw('AVG(price) as avg_price'))
             ->groupBy('month')
             ->pluck('avg_price', 'month')
             ->toArray();
 
-        // Mediana max_participants
-        $maxParticipantsValues = Tournament::pluck('max_participants')->toArray();
+        $maxParticipantsValues = (clone $base)->pluck('max_participants')->toArray();
         sort($maxParticipantsValues);
         $count = count($maxParticipantsValues);
-        $middle = floor(($count - 1) / 2);
-        $participantsPerTeam = ($count % 2) ? $maxParticipantsValues[$middle] : ($maxParticipantsValues[$middle] + $maxParticipantsValues[$middle + 1]) / 2;
+        $middle = $count ? (int)floor(($count - 1) / 2) : 0;
+        $participantsPerTeam = $count ? (($count % 2) ? $maxParticipantsValues[$middle] : ($maxParticipantsValues[$middle + 1] + $maxParticipantsValues[$middle]) / 2) : 0;
 
-        // Odchylenie standardowe ceny wejść
-        $averagePriceOverall = Tournament::avg('price');
-        $priceVariance = Tournament::select(DB::raw('avg(pow(price - ' . $averagePriceOverall . ', 2)) as variance'))
-            ->first()
-            ->variance;
-        $priceStdDeviation = sqrt($priceVariance);
+        $avg = (float)((clone $base)->avg('price') ?: 0);
+        $variance = (float)((clone $base)->selectRaw('AVG(POW(price - ?, 2)) as variance', [$avg])->value('variance') ?: 0);
+        $priceStdDeviation = $variance > 0 ? sqrt($variance) : 0;
 
         return view('index', [
             'matchesPerMonth' => $matchesPerMonth,
             'averagePricePerMonth' => $averagePricePerMonth,
             'participantsPerTeam' => $participantsPerTeam,
             'priceStdDeviation' => $priceStdDeviation,
+            'filters' => [
+                'year' => $year,
+                'date_from' => $dateFrom,
+                'date_to' => $dateTo,
+                'price_min' => $priceMin,
+                'price_max' => $priceMax,
+                'scope' => $scope,
+                'include_past' => $includePast,
+            ],
         ]);
     }
 }

@@ -5,7 +5,7 @@
 <body class="d-flex flex-column min-vh-100">
     @include('shared.navbar')
 
-    <div class="container mt-5 mb-5">
+    <div class="container mt-5 mb-5 flex-grow-1">
 
         @include('shared.session-error')
 

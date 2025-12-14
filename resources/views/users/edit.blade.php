@@ -6,7 +6,6 @@
     @include('shared.navbar')
 
     <div class="container mt-5 mb-5 flex-grow-1">
-
         @include('shared.session-error')
 
         <div class="row mt-4 mb-4 text-center">
@@ -17,7 +16,8 @@
 
         <div class="row d-flex justify-content-center">
             <div class="col-6">
-                <form method="POST" action="{{ route('users.update', $user) }}" class="needs-validation" enctype="multipart/form-data" novalidation>
+                <form method="POST" action="{{ route('users.update', $user) }}" class="needs-validation"
+                    enctype="multipart/form-data" novalidate>
                     @csrf
                     @method('PUT')
                     <div class="form-group mb-2">
@@ -57,9 +57,14 @@
                     <div class="form-group mb-2">
                         <label for="avatar" class="form-label">Avatar</label>
                         <input id="avatar" name="avatar" type="file"
-                            class="form-control @if ($errors->first('avatar')) is-invalid @endif"
-                            value="{{ $user->avatar }}">
+                            class="form-control @if ($errors->first('avatar')) is-invalid @endif" accept="image/*">
                         <div class="invalid-feedback">Nieprawidłowy plik zdjęcia!</div>
+                        @if ($user->avatar)
+                            <div class="mt-2">
+                                <img src="{{ asset('storage/img/' . $user->avatar) }}" alt="Avatar"
+                                    class="rounded-circle" width="50" height="50">
+                            </div>
+                        @endif
                     </div>
                     <div class="text-center mt-4 mb-4">
                         <input class="btn btn-success" type="submit" value="Zaktualizuj">

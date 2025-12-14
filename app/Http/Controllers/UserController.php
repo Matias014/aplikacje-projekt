@@ -6,7 +6,6 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Models\Tournament;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 
@@ -14,38 +13,39 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::all();
+        Gate::authorize('viewAny', User::class);
+
+        $users = User::orderBy('id')->get();
         return view('admin.users.index', ['users' => $users]);
     }
 
     public function create()
     {
-        Gate::authorize('create', Auth::user());
-
+        Gate::authorize('create', User::class);
         return view('admin.users.create');
     }
 
     public function store(StoreUserRequest $request)
     {
+        Gate::authorize('create', User::class);
+
         $input = $request->all();
 
         if ($request->hasFile('avatar')) {
             $imageName = $request->file('avatar')->getClientOriginalName();
             $request->avatar->move(public_path('storage/img'), $imageName);
-
             $input['avatar'] = $imageName;
         }
 
-        $user = User::create($input);
+        User::create($input);
 
-        return redirect()->route('users.show', $user)->with('success', 'Użytkownik został pomyślnie dodany.');
+        return redirect()->route('users.index')->with('success', 'Użytkownik został pomyślnie dodany.');
     }
 
     public function show(User $user)
     {
         Gate::authorize('view', $user);
 
-        // Pobierz turnieje, w których użytkownik bierze udział
         $tournaments = Tournament::whereHas('participants', function ($query) use ($user) {
             $query->where('user_id', $user->id);
         })->get();
@@ -56,7 +56,6 @@ class UserController extends Controller
     public function edit(User $user)
     {
         Gate::authorize('update', $user);
-
         return view('users.edit', ['user' => $user]);
     }
 
@@ -80,7 +79,7 @@ class UserController extends Controller
 
         $user->update($input);
 
-        return redirect()->route('users.show', $user)->with('success', 'Użytkownik został pomyślnie zaktualizowany.');
+        return redirect()->route('users.index')->with('success', 'Użytkownik został pomyślnie zaktualizowany.');
     }
 
     public function destroy(User $user)

@@ -6,7 +6,7 @@
     @include('shared.navbar')
 
     <main class="flex-grow-1">
-        <div class="container text-center mt-2">
+        <div class="container text-center mt-2 flex-grow-1">
             <div class="row mt-5">
                 <h1>Użytkownicy</h1>
             </div>

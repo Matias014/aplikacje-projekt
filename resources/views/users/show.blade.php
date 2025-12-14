@@ -43,7 +43,7 @@
                                     </tr>
                                     <tr>
                                         <th scope="col"></th>
-                                        <td>
+                                        <td class="d-flex flex-wrap gap-2">
                                             <a href="{{ route('users.edit', ['user' => $user->id]) }}"
                                                 class="btn btn-primary mb-2">Zmień dane</a>
                                             <form method="POST" action="{{ route('users.destroy', $user->id) }}"
@@ -56,6 +56,17 @@
                                     </tr>
                                 </tbody>
                             </table>
+                        </div>
+                    </div>
+
+                    <div class="card mb-4">
+                        <div class="card-header text-center">
+                            <h3>Raporty</h3>
+                        </div>
+                        <div class="card-body text-center">
+                            <p class="m-0 mb-3">Generuj raport PDF i eksportuj wykresy PNG/JPG ze statystyk.</p>
+                            <a class="btn btn-outline-secondary"
+                                href="{{ route('account.reports.statistics') }}">Przejdź do raportów</a>
                         </div>
                     </div>
 
@@ -78,6 +89,7 @@
                             @endif
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>

@@ -11,7 +11,7 @@
 <body class="d-flex flex-column min-vh-100">
     @include('shared.navbar')
 
-    <div class="container mt-5 mb-5">
+    <div class="container mt-5 mb-5 flex-grow-1">
         @if (session('error'))
             <div class="row d-flex justify-content-center">
                 <div class="alert alert-danger">{{ session('error') }}</div>

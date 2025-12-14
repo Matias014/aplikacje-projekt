@@ -5,7 +5,7 @@
 <body class="d-flex flex-column min-vh-100">
     @include('shared.navbar')
 
-    <div class="container mt-5 mb-5">
+    <div class="container mt-5 mb-5 flex-grow-1">
 
         @include('shared.session-error')
 
@@ -18,7 +18,7 @@
         <div class="row d-flex justify-content-center">
             <div class="col-6">
                 <form method="POST" action="{{ route('users.update', $user) }}" class="needs-validation"
-                    enctype="multipart/form-data" novalidation>
+                    enctype="multipart/form-data" novalidate>
                     @csrf
                     @method('PUT')
                     <div class="form-group mb-2">
@@ -58,8 +58,7 @@
                     <div class="form-group mb-2">
                         <label for="avatar" class="form-label">Avatar</label>
                         <input id="avatar" name="avatar" type="file"
-                            class="form-control @if ($errors->first('avatar')) is-invalid @endif"
-                            value="{{ $user->avatar }}" required>
+                            class="form-control @if ($errors->first('avatar')) is-invalid @endif">
                         <div class="invalid-feedback">Nieprawidłowy plik zdjęcia!</div>
                     </div>
                     <div class="text-center mt-4 mb-4">

@@ -12,6 +12,12 @@ class Tournament extends Model
 
     protected $fillable = ['name', 'description', 'date', 'price', 'img', 'max_participants'];
 
+    protected $casts = [
+        'date' => 'date',
+        'price' => 'decimal:2',
+        'max_participants' => 'integer',
+    ];
+
     public $timestamps = false;
 
     public function participants()

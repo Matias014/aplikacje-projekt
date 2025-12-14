@@ -5,7 +5,7 @@
 <body class="d-flex flex-column min-vh-100">
     @include('shared.navbar')
 
-    <main>
+    <main class="flex-grow-1">
         <div class="container text-center mt-2">
             <div class="row mt-5">
                 <h1>Turnieje</h1>

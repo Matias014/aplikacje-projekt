@@ -1,129 +1,24 @@
 @include('shared.html')
 
-@include('shared.head', ['pageTitle' => 'Strona główna'])
+@include('shared.head', ['pageTitle' => 'Raporty i eksport'])
 
 <body class="d-flex flex-column min-vh-100">
     @include('shared.navbar')
 
     <main class="flex-grow-1">
-        <div class="container-fluid p-0">
-            <div class="hero-section text-center text-white d-flex align-items-center justify-content-center"
-                style="background-image: url('{{ asset('img/paintballMatch.jpg') }}'); background-size: cover; height: 70vh;">
-                <div class="content d-flex flex-column justify-content-center"
-                    style="z-index: 1; background-color: rgba(0, 0, 0, 0.5); width: 100%; height: 100%;">
-                    <h1 class="display-3">Witamy w Klubie Paintballowym</h1>
-                    <p class="lead">Dołącz do nas i przeżyj niezapomniane emocje!</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="container mt-5">
-            <div class="row">
-                <div class="col-md-6">
-                    <img src="{{ asset('img/paintballMatch.jpg') }}" alt="Mecz paintballa" class="img-fluid rounded">
-                </div>
-                <div class="col-md-6 d-flex flex-column justify-content-center">
-                    <h2>Witamy na naszej stronie klubu paintballowego!</h2>
-                    <p>Niezależnie od tego czy jesteś początkującym lub zawodowcem w paintballu, zawsze z chęcią witamy
-                        nowych członków naszej społeczności! Nasz klub oferuje możliwość dołączenia do turniejów, które
-                        są dostępne w zakładce "Turnieje" w menu nawigacji. Tam będzie można zobaczyć aktualnie dostępne
-                        turnieje. Mamy nadzieję, że wkrótce zobaczymy Cię na meczu paintballowym :)</p>
-                    <a href="{{ route('tournaments.index') }}" class="btn btn-primary mt-3">Zobacz Turnieje</a>
-                </div>
-            </div>
-        </div>
-
-        <div id="carouselExampleIndicators" class="carousel slide mt-5" data-bs-ride="carousel">
-            <div class="carousel-indicators">
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
-                    aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-                    aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-                    aria-label="Slide 3"></button>
-            </div>
-            <div class="carousel-inner">
-                <div class="carousel-item active" data-bs-interval="6000">
-                    <img src="{{ asset('img/slide1.jpg') }}" class="d-block w-100" alt="Slide 1">
-                    <div class="carousel-caption d-none d-md-block text-white">
-                        <h5>Intensywne rozgrywki</h5>
-                        <p>Przeżyj niezapomniane chwile z naszym klubem paintballowym.</p>
-                    </div>
-                </div>
-                <div class="carousel-item" data-bs-interval="6000">
-                    <img src="{{ asset('img/slide2.jpg') }}" class="d-block w-100" alt="Slide 2">
-                    <div class="carousel-caption d-none d-md-block text-white">
-                        <h5>Zawodowi gracze</h5>
-                        <p>Dołącz do naszych profesjonalnych zawodników i zdobywaj doświadczenie.</p>
-                    </div>
-                </div>
-                <div class="carousel-item" data-bs-interval="6000">
-                    <img src="{{ asset('img/slide3.jpg') }}" class="d-block w-100" alt="Slide 3">
-                    <div class="carousel-caption d-none d-md-block text-white">
-                        <h5>Najlepsze turnieje</h5>
-                        <p>Sprawdź naszą ofertę turniejów i wybierz coś dla siebie.</p>
-                    </div>
-                </div>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-                data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-                data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div>
-
-        <div class="container mt-5">
-            <div class="row text-center">
-                <div class="col-md-4">
-                    <div class="card mb-4 shadow-sm">
-                        <img src="{{ asset('img/benefit1.jpg') }}" class="card-img-top" alt="Profesjonalne wyposażenie">
-                        <div class="card-body">
-                            <h5 class="card-title">Profesjonalne wyposażenie</h5>
-                            <p class="card-text">Zapewniamy najnowsze i najlepsze wyposażenie dla naszych członków.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card mb-4 shadow-sm">
-                        <img src="{{ asset('img/benefit2.jpg') }}" class="card-img-top" alt="Bezpieczne warunki">
-                        <div class="card-body">
-                            <h5 class="card-title">Bezpieczne warunki</h5>
-                            <p class="card-text">Dbamy o bezpieczeństwo naszych graczy podczas każdego meczu.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card mb-4 shadow-sm">
-                        <img src="{{ asset('img/benefit3.jpg') }}" class="card-img-top" alt="Doskonała lokalizacja">
-                        <div class="card-body">
-                            <h5 class="card-title">Doskonała lokalizacja</h5>
-                            <p class="card-text">Nasze pole paintballowe znajduje się w malowniczej okolicy.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="container mt-5" id="statystyki">
+        <div class="container mt-5 mb-5">
             <div class="row justify-content-center">
                 <div class="col-12 col-xl-10">
                     <div class="card shadow-sm">
                         <div
                             class="card-header d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2">
-                            <h2 class="m-0">Statystyki</h2>
-                            @auth
-                                <a class="btn btn-outline-secondary"
-                                    href="{{ route('account.reports.statistics', request()->query()) }}">Raporty i eksport
-                                    (Konto)</a>
-                            @endauth
+                            <h1 class="m-0 fs-4">Raporty i eksport statystyk</h1>
+                            <a class="btn btn-outline-secondary" href="{{ route('users.show', Auth::user()->id) }}">Wróć
+                                do konta</a>
                         </div>
                         <div class="card-body">
-                            <form method="GET" action="{{ route('index') }}" id="statsForm" class="row g-3">
+                            <form method="GET" action="{{ route('account.reports.statistics') }}" id="reportForm"
+                                class="row g-3">
                                 <div class="col-12 col-md-3">
                                     <label class="form-label" for="year">Rok</label>
                                     <input id="year" type="number" name="year"
@@ -200,22 +95,47 @@
 
                                 <div class="col-12 d-flex flex-wrap gap-2">
                                     <button class="btn btn-primary" type="submit">Zastosuj</button>
-                                    <a class="btn btn-outline-secondary" href="{{ route('index') }}">Wyczyść</a>
+                                    <a class="btn btn-outline-secondary"
+                                        href="{{ route('account.reports.statistics') }}">Wyczyść</a>
+                                    <a class="btn btn-outline-info"
+                                        href="{{ route('reports.statistics.pdf', request()->query()) }}">Pobierz
+                                        PDF</a>
                                 </div>
                             </form>
 
-                            <div class="row mt-4">
+                            <hr class="my-4">
+
+                            <div class="row g-3">
                                 <div class="col-12 col-lg-6">
                                     <div class="card">
-                                        <div class="card-header">Liczba turniejów</div>
+                                        <div
+                                            class="card-header d-flex flex-wrap justify-content-between align-items-center gap-2">
+                                            <span>Liczba turniejów</span>
+                                            <div class="d-flex flex-wrap gap-2">
+                                                <button type="button" class="btn btn-outline-success btn-sm"
+                                                    id="downloadMatchesPng">PNG</button>
+                                                <button type="button" class="btn btn-outline-secondary btn-sm"
+                                                    id="downloadMatchesJpg">JPG</button>
+                                            </div>
+                                        </div>
                                         <div class="card-body">
                                             <canvas id="matchesPerMonthChart"></canvas>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-lg-6 mt-3 mt-lg-0">
+
+                                <div class="col-12 col-lg-6">
                                     <div class="card">
-                                        <div class="card-header">Średnia cena wejść</div>
+                                        <div
+                                            class="card-header d-flex flex-wrap justify-content-between align-items-center gap-2">
+                                            <span>Średnia cena wejść</span>
+                                            <div class="d-flex flex-wrap gap-2">
+                                                <button type="button" class="btn btn-outline-success btn-sm"
+                                                    id="downloadAveragePng">PNG</button>
+                                                <button type="button" class="btn btn-outline-secondary btn-sm"
+                                                    id="downloadAverageJpg">JPG</button>
+                                            </div>
+                                        </div>
                                         <div class="card-body">
                                             <canvas id="averagePricePerMonthChart"></canvas>
                                         </div>
@@ -258,15 +178,16 @@
                                 Jeśli wybierzesz daty, rok jest ignorowany. Jeśli nie wybierzesz dat, filtr działa po
                                 roku.
                             </div>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </main>
 
     @include('shared.footer')
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         const yearEl = document.getElementById('year');
@@ -280,7 +201,7 @@
             el.setCustomValidity(ok ? '' : msg);
         }
 
-        function validateStatsForm() {
+        function validateReportForm() {
             const dateFrom = dateFromEl.value ? new Date(dateFromEl.value) : null;
             const dateTo = dateToEl.value ? new Date(dateToEl.value) : null;
 
@@ -318,14 +239,14 @@
         }
 
         ['input', 'change'].forEach(evt => {
-            dateFromEl.addEventListener(evt, validateStatsForm);
-            dateToEl.addEventListener(evt, validateStatsForm);
-            priceMinEl.addEventListener(evt, validateStatsForm);
-            priceMaxEl.addEventListener(evt, validateStatsForm);
-            yearEl.addEventListener(evt, validateStatsForm);
+            dateFromEl.addEventListener(evt, validateReportForm);
+            dateToEl.addEventListener(evt, validateReportForm);
+            priceMinEl.addEventListener(evt, validateReportForm);
+            priceMaxEl.addEventListener(evt, validateReportForm);
+            yearEl.addEventListener(evt, validateReportForm);
         });
 
-        validateStatsForm();
+        validateReportForm();
 
         const monthLabels = ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień',
             'Październik', 'Listopad', 'Grudzień'
@@ -341,13 +262,13 @@
             averagePricePerMonthData[{{ $month - 1 }}] = {{ $avg_price }};
         @endforeach
 
-        new Chart(document.getElementById('matchesPerMonthChart'), {
+        const matchesChart = new Chart(document.getElementById('matchesPerMonthChart'), {
             type: 'bar',
             data: {
                 labels: monthLabels,
                 datasets: [{
                     label: 'Liczba turniejów',
-                    data: matchesPerMonthData,
+                    data: matchesPerMonthData
                 }]
             },
             options: {
@@ -359,13 +280,13 @@
             }
         });
 
-        new Chart(document.getElementById('averagePricePerMonthChart'), {
+        const avgChart = new Chart(document.getElementById('averagePricePerMonthChart'), {
             type: 'bar',
             data: {
                 labels: monthLabels,
                 datasets: [{
                     label: 'Średnia cena wejść (PLN)',
-                    data: averagePricePerMonthData,
+                    data: averagePricePerMonthData
                 }]
             },
             options: {
@@ -376,6 +297,53 @@
                 }
             }
         });
+
+        async function downloadCanvasAs(format, name, canvas) {
+            const mime = format === 'png' ? 'image/png' : 'image/jpeg';
+            const data = format === 'png' ? canvas.toDataURL(mime) : canvas.toDataURL(mime, 0.92);
+
+            const form = new FormData();
+            form.append('image', data);
+            form.append('format', format);
+            form.append('name', name);
+
+            const resp = await fetch('{{ route('reports.statistics.image') }}', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: form
+            });
+
+            if (!resp.ok) {
+                alert('Nie udało się wygenerować pliku. Upewnij się, że jesteś zalogowany i spróbuj ponownie.');
+                return;
+            }
+
+            const blob = await resp.blob();
+            if (!blob || blob.size === 0) {
+                alert('Wygenerowano pusty plik. Spróbuj ponownie.');
+                return;
+            }
+
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = name + '.' + (format === 'png' ? 'png' : 'jpg');
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            URL.revokeObjectURL(url);
+        }
+
+        document.getElementById('downloadMatchesPng').addEventListener('click', () => downloadCanvasAs('png',
+            'wykres_liczba_turniejow', document.getElementById('matchesPerMonthChart')));
+        document.getElementById('downloadMatchesJpg').addEventListener('click', () => downloadCanvasAs('jpg',
+            'wykres_liczba_turniejow', document.getElementById('matchesPerMonthChart')));
+        document.getElementById('downloadAveragePng').addEventListener('click', () => downloadCanvasAs('png',
+            'wykres_srednia_cena', document.getElementById('averagePricePerMonthChart')));
+        document.getElementById('downloadAverageJpg').addEventListener('click', () => downloadCanvasAs('jpg',
+            'wykres_srednia_cena', document.getElementById('averagePricePerMonthChart')));
     </script>
 </body>
 

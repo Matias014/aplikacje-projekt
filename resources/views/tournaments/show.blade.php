@@ -16,6 +16,8 @@
                             <p class="card-text">{{ $tournament->description }}</p>
                             <p class="card-text">Data turnieju: {{ $tournament->date }}</p>
                             <p class="card-text">Cena wejściowa: {{ $tournament->price }} zł</p>
+                            <a href="{{ route('reports.tournament.pdf', $tournament) }}"
+                                class="btn btn-outline-secondary mt-2">Raport PDF</a>
                             @auth
                                 @if ($tournament->date > now())
                                     @if ($tournament->participants->contains(Auth::id()))
@@ -59,7 +61,8 @@
                                 <div class="card">
                                     <div class="card-header">
                                         <h2>Drużyna {{ $team }}
-                                            ({{ $teams->get($team, collect())->count() }}/{{ $maxParticipants }})</h2>
+                                            ({{ $teams->get($team, collect())->count() }}/{{ $maxParticipants }})
+                                        </h2>
                                     </div>
                                     <div class="card-body">
                                         @forelse ($teams->get($team, collect()) as $participant)
